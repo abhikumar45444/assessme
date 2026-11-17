@@ -76,9 +76,9 @@ export default function HomeScreen({
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none">
-      {/* 1. Official AssessME Header (Dark Charcoal #111518) */}
-      <div className="bg-[#111518] px-4 pt-3.5 md:pt-12 pb-3.5 border-b border-white/10 shadow-md">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Official AssessME Header (ALWAYS FIXED AT TOP - NEVER MOVES WHEN SCROLLING) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 bg-[#111518] px-4 pt-3.5 md:pt-12 pb-3.5 border-b border-white/10 shadow-md">
         <div className="flex items-center justify-between">
           {/* Official AssessME White Logo */}
           <div className="flex items-center gap-2">
@@ -130,10 +130,11 @@ export default function HomeScreen({
             ChMS API Sync Active
           </span>
         </div>
-      </div>
+      </header>
 
-      <div className="p-4 space-y-5">
-        {/* 2. Authentic AssessME Hero Carousel */}
+      {/* 2. Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-5 pb-28">
+        {/* Authentic AssessME Hero Carousel */}
         <div
           className="relative rounded-3xl overflow-hidden shadow-card border border-slate-200 bg-[#1F2428] touch-pan-y"
           onTouchStart={handleTouchStart}
@@ -189,7 +190,7 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* 3. Core Value Proposition Banner */}
+        {/* Core Value Proposition Banner */}
         <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card">
           <p className="text-[11px] font-black text-[#E17335] uppercase tracking-wider mb-1">
             DISCOVERING MINISTRY FIT
@@ -219,7 +220,7 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* 4. The 5 Core Assessments Grid */}
+        {/* The 5 Core Assessments Grid */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
@@ -279,7 +280,7 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* 5. "6 Easy Steps to Assess Church Members" */}
+        {/* 6 Easy Steps to Assess Church Members */}
         <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card space-y-3">
           <div>
             <span className="text-[10px] font-black text-[#E17335] uppercase tracking-wider block">
@@ -321,7 +322,7 @@ export default function HomeScreen({
           </button>
         </div>
 
-        {/* 6. Discipleship Book & Sermon Kit ("Made for a Mission") */}
+        {/* Discipleship Book & Sermon Kit ("Made for a Mission") */}
         <div className="rounded-3xl p-4 bg-gradient-to-br from-[#111518] to-[#1F2428] text-white shadow-card space-y-3">
           <div className="flex items-center gap-3">
             <img
@@ -356,7 +357,7 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* 7. Pastoral Testimonials */}
+        {/* Pastoral Testimonials */}
         <div className="space-y-3">
           <div>
             <h3 className="text-sm font-black font-cabin text-[#111518]">
@@ -390,7 +391,7 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* 8. Church Consultation Booking Banner */}
+        {/* Church Consultation Booking Banner */}
         <div className="p-4 rounded-3xl bg-[#E17335] text-white shadow-orange space-y-3">
           <div className="flex items-center gap-2 text-orange-100 text-xs font-bold uppercase tracking-wider">
             <Church className="w-4 h-4 text-white" />

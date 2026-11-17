@@ -16,7 +16,7 @@ export default function ConsultationScreen({ onBack }) {
 
   if (submitted) {
     return (
-      <div className="min-h-full flex-1 bg-[#F4F5F6] flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto font-sans select-none">
+      <div className="min-h-full flex-1 flex flex-col h-full min-h-0 bg-[#F4F5F6] p-6 text-center max-w-md mx-auto font-sans select-none items-center justify-center">
         <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mb-5 shadow-sm text-[#E17335] animate-scale-in">
           <Calendar className="w-10 h-10" />
         </div>
@@ -49,13 +49,13 @@ export default function ConsultationScreen({ onBack }) {
   }
 
   return (
-    <div className="min-h-full flex-1 bg-[#F4F5F6] pb-24 font-sans select-none overflow-y-auto no-scrollbar scrollbar-hide">
-      {/* Header */}
-      <div className="bg-gradient-to-b from-[#111518] to-[#1F2428] px-5 pt-5 md:pt-14 pb-8 relative overflow-hidden">
+    <div className="min-h-full flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Fixed Header (ALWAYS SHOWN AT TOP - NEVER MOVES) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 bg-gradient-to-b from-[#111518] to-[#1F2428] px-5 pt-5 md:pt-14 pb-6 relative overflow-hidden shadow-md">
         <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-[#E17335]/15 -translate-y-12 translate-x-12" />
         <button
           onClick={onBack}
-          className="relative w-8 h-8 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl flex items-center justify-center mb-6 cursor-pointer transition-all"
+          className="relative w-8 h-8 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl flex items-center justify-center mb-4 cursor-pointer transition-all"
         >
           <ArrowLeft className="w-4 h-4 text-white" />
         </button>
@@ -63,16 +63,17 @@ export default function ConsultationScreen({ onBack }) {
           <p className="text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-1">
             FREE CHURCH MOBILIZATION SESSION
           </p>
-          <h1 className="text-2xl font-black font-cabin text-white mb-2 leading-tight">
+          <h1 className="text-xl font-black font-cabin text-white mb-1.5 leading-tight">
             Schedule a 1-on-1 Pastoral Consultation
           </h1>
           <p className="text-slate-300 text-xs">
             Discover how AssessME integrates with Planning Center, Pushpay, and your discipleship track.
           </p>
         </div>
-      </div>
+      </header>
 
-      <div className="p-4 space-y-4">
+      {/* 2. Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4 pb-28">
         {/* What to expect */}
         <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card">
           <p className="text-xs font-black text-[#E17335] mb-3 uppercase tracking-wide">

@@ -30,7 +30,7 @@ export default function PlanScreen({
   // Activation Confirmed Success Screen
   if (orderConfirmed) {
     return (
-      <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none">
+      <div className="flex-1 flex flex-col h-full min-h-0 bg-[#F4F5F6] pb-24 font-sans select-none">
         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center my-auto">
           <div className="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4 text-[#E17335] shadow-sm animate-scale-in">
             <CheckCircle2 className="w-12 h-12" />
@@ -74,9 +74,9 @@ export default function PlanScreen({
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none">
-      {/* 1. Header */}
-      <div className="px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Fixed Header (ALWAYS SHOWN AT TOP - NEVER MOVES) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between shadow-2xs">
         <div>
           <h2 className="text-lg font-black font-cabin text-[#111518] leading-tight">
             Church Assessment Plan
@@ -93,7 +93,7 @@ export default function PlanScreen({
             Clear all
           </button>
         )}
-      </div>
+      </header>
 
       {plan.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center my-auto">
@@ -112,8 +112,9 @@ export default function PlanScreen({
           </button>
         </div>
       ) : (
-        <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4">
-          {/* 2. Promo Banner */}
+        /* 2. Scrollable Content Area */
+        <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4 pb-28">
+          {/* Promo Banner */}
           <div className="p-3.5 rounded-2xl bg-white border border-[#ECECEC] shadow-card flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#E17335] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
               <Database className="w-5 h-5 text-white" />
@@ -128,7 +129,7 @@ export default function PlanScreen({
             </div>
           </div>
 
-          {/* 3. Plan Items List */}
+          {/* Plan Items List */}
           <div className="space-y-3">
             {plan.map((item) => (
               <div
@@ -182,7 +183,7 @@ export default function PlanScreen({
             ))}
           </div>
 
-          {/* 4. Order Summary Card */}
+          {/* Order Summary Card */}
           <div className="p-4 bg-white rounded-2xl border border-[#ECECEC] space-y-2.5 text-xs shadow-card">
             <div className="flex justify-between items-center text-[#696767]">
               <span>Assessment Seats Subtotal</span>
@@ -205,13 +206,13 @@ export default function PlanScreen({
             </div>
           </div>
 
-          {/* 5. Security & Guarantee Note */}
+          {/* Security & Guarantee Note */}
           <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#696767] pt-1">
             <Lock className="w-3.5 h-3.5 text-[#E17335] flex-shrink-0" />
             <span>256-bit Encrypted • 30-Day Ministry Satisfaction Guarantee</span>
           </div>
 
-          {/* 6. Bottom Action Button */}
+          {/* Bottom Action Button */}
           <button
             onClick={handleActivatePlan}
             disabled={isSubmitting || plan.length === 0}

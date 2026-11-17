@@ -23,9 +23,9 @@ export default function PastorProfileScreen({
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none overflow-y-auto no-scrollbar scrollbar-hide">
-      {/* 1. Header */}
-      <div className="px-5 pt-3.5 md:pt-12 pb-3.5 flex items-center justify-between bg-white border-b border-[#ECECEC]">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Fixed Header (ALWAYS SHOWN AT TOP - NEVER MOVES) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 px-5 pt-3.5 md:pt-12 pb-3.5 flex items-center justify-between bg-white border-b border-[#ECECEC] shadow-2xs">
         <div className="flex items-center gap-2.5 min-w-0">
           {onBack && (
             <button
@@ -57,9 +57,10 @@ export default function PastorProfileScreen({
             AM
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="p-4 space-y-4">
+      {/* 2. Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4 pb-28">
         {/* Sync Toast Alert */}
         {syncStatus === 'done' && (
           <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-2.5 shadow-xs animate-scale-in">
@@ -70,7 +71,7 @@ export default function PastorProfileScreen({
           </div>
         )}
 
-        {/* 2. Customer Summary Card */}
+        {/* Customer Summary Card */}
         <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card">
           <div className="flex items-start justify-between mb-3.5">
             <div className="flex items-center gap-3">
@@ -133,7 +134,7 @@ export default function PastorProfileScreen({
           </div>
         </div>
 
-        {/* 3. ChMS Live Sync Status Banner */}
+        {/* ChMS Live Sync Status Banner */}
         <div className="bg-white rounded-2xl p-3.5 border border-[#ECECEC] shadow-card flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#E17335] flex items-center justify-center flex-shrink-0 shadow-2xs">
@@ -165,7 +166,7 @@ export default function PastorProfileScreen({
           </button>
         </div>
 
-        {/* 4. Ministry Network Selector */}
+        {/* Ministry Network Selector */}
         <div className="bg-white rounded-2xl p-4 border border-[#ECECEC] shadow-card space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -191,7 +192,7 @@ export default function PastorProfileScreen({
           </div>
         </div>
 
-        {/* 5. ChMS Integration Connectors */}
+        {/* ChMS Integration Connectors */}
         <div className="bg-white rounded-2xl p-4 border border-[#ECECEC] shadow-card space-y-3">
           <div className="flex items-center gap-2.5">
             <Database className="w-4 h-4 text-[#E17335]" />
@@ -213,7 +214,7 @@ export default function PastorProfileScreen({
           </div>
         </div>
 
-        {/* 6. Language Settings */}
+        {/* Language Settings */}
         <div className="bg-white rounded-2xl p-4 border border-[#ECECEC] shadow-card flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <Globe className="w-4 h-4 text-[#E17335]" />
@@ -239,7 +240,7 @@ export default function PastorProfileScreen({
           </div>
         </div>
 
-        {/* 7. Pastoral Support Call Card */}
+        {/* Pastoral Support Call Card */}
         <div className="bg-gradient-to-br from-[#111518] to-[#1F2428] rounded-2xl p-4 text-white shadow-card space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">

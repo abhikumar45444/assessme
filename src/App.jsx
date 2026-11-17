@@ -90,11 +90,7 @@ export default function App() {
   return (
     <PhoneShell isLocked={isModalOpen}>
       <div className="flex flex-col flex-1 relative h-full overflow-hidden">
-        <div
-          className={`flex-1 ${
-            isModalOpen ? 'overflow-hidden' : 'overflow-y-auto'
-          } no-scrollbar scrollbar-hide pb-2`}
-        >
+        <div className="flex-1 flex flex-col relative h-full min-h-0 overflow-hidden">
           {activeTab === 'home' && (
             <HomeScreen
               onOpenAssessments={() => setActiveTab('assessments')}

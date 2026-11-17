@@ -24,9 +24,9 @@ export default function AssessmentsScreen({ onSelectAssessment, onAddToPlan }) {
   })
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none">
-      {/* 1. Header */}
-      <div className="px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Fixed Header (ALWAYS SHOWN AT TOP - NEVER MOVES) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between shadow-2xs">
         <div>
           <h2 className="text-lg font-black font-cabin text-[#111518] leading-tight">
             AssessME Assessments
@@ -49,9 +49,10 @@ export default function AssessmentsScreen({ onSelectAssessment, onAddToPlan }) {
             <option value="rating">Top Rated</option>
           </select>
         </div>
-      </div>
+      </header>
 
-      <div className="p-4 space-y-4">
+      {/* 2. Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4 pb-28">
         {/* Search bar */}
         <div className="relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />

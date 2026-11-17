@@ -54,9 +54,9 @@ export default function MinistryFitQuiz({ onSelectAssessment, onOpenConsultation
   const recommended = getRecommendedAssessment()
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none min-h-full">
-      {/* 1. Header */}
-      <div className="px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
+      {/* 1. Fixed Header (ALWAYS SHOWN AT TOP - NEVER MOVES) */}
+      <header className="flex-shrink-0 sticky top-0 z-30 px-5 pt-3.5 md:pt-12 pb-3 bg-white border-b border-[#ECECEC] flex items-center justify-between shadow-2xs">
         <div>
           <h2 className="text-lg font-black font-cabin text-[#111518] leading-tight">
             Ministry Fit Diagnostic
@@ -74,88 +74,89 @@ export default function MinistryFitQuiz({ onSelectAssessment, onOpenConsultation
           <RotateCcw className="w-3 h-3 text-slate-500" />
           <span>Restart</span>
         </button>
-      </div>
+      </header>
 
-      {isFinished ? (
-        /* Results / Prescription Screen */
-        <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4">
-          {/* Recommended Assessment Card */}
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-[#111518] via-[#1F2428] to-[#111518] text-white shadow-card border border-white/10">
-            <div className="flex items-center gap-2 text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">
-              <Sparkles className="w-4 h-4 text-[#E17335]" />
-              <span>Prescribed Assessment Solution</span>
+      {/* 2. Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-4 pb-28">
+        {isFinished ? (
+          /* Results / Prescription Screen */
+          <div className="space-y-4">
+            {/* Recommended Assessment Card */}
+            <div className="p-5 rounded-3xl bg-gradient-to-br from-[#111518] via-[#1F2428] to-[#111518] text-white shadow-card border border-white/10">
+              <div className="flex items-center gap-2 text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">
+                <Sparkles className="w-4 h-4 text-[#E17335]" />
+                <span>Prescribed Assessment Solution</span>
+              </div>
+
+              <h3 className="text-xl font-black font-cabin mb-1.5 leading-tight text-white">
+                {recommended.name}
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                {recommended.tagline}
+              </p>
+
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 mb-4 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-300">Optimal Placement:</span>
+                  <span className="font-bold text-orange-400">99.4% Fit Match</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-300">ChMS Synchronization:</span>
+                  <span className="font-bold text-emerald-400">Pushpay & PCO Auto-Sync</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-300">Starting At:</span>
+                  <span className="font-black font-cabin text-white text-base">${recommended.price} / seat</span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onSelectAssessment(recommended)}
+                className="w-full py-3.5 px-4 rounded-2xl bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-orange cursor-pointer transition-all"
+              >
+                <span>Explore Assessment Specs</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
-            <h3 className="text-xl font-black font-cabin mb-1.5 leading-tight text-white">
-              {recommended.name}
-            </h3>
-            <p className="text-xs text-slate-300 leading-relaxed mb-4">
-              {recommended.tagline}
-            </p>
-
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/10 mb-4 space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300">Optimal Placement:</span>
-                <span className="font-bold text-orange-400">99.4% Fit Match</span>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300">ChMS Synchronization:</span>
-                <span className="font-bold text-emerald-400">Pushpay & PCO Auto-Sync</span>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300">Starting At:</span>
-                <span className="font-black font-cabin text-white text-base">${recommended.price} / seat</span>
+            {/* Ministry Role Insights */}
+            <div className="p-4 bg-white rounded-2xl border border-[#ECECEC] shadow-card space-y-2.5">
+              <h4 className="text-xs font-bold font-cabin text-[#111518] flex items-center gap-2">
+                <HeartHandshake className="w-4 h-4 text-[#E17335]" />
+                <span>Recommended Ministry Placements</span>
+              </h4>
+              <div className="space-y-2 text-xs text-[#565D66]">
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
+                  <span>Small Group Leader, Discipleship Mentor, or Care Coordinator</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
+                  <span>Hospitality Welcome Host or Community Outreach Champion</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
+                  <span>Ministry Department Lead or New Campus Launch Core Member</span>
+                </div>
               </div>
             </div>
 
-            <button
-              onClick={() => onSelectAssessment(recommended)}
-              className="w-full py-3.5 px-4 rounded-2xl bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-orange cursor-pointer transition-all"
-            >
-              <span>Explore Assessment Specs</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {/* Book Consultation Banner */}
+            <div className="p-4 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-between gap-3">
+              <div>
+                <h5 className="text-xs font-bold font-cabin text-[#111518]">Need Pastor Consultation?</h5>
+                <p className="text-[11px] text-[#696767]">Schedule a 1-on-1 church mobilization demo</p>
+              </div>
+              <button
+                onClick={onOpenConsultation}
+                className="px-3.5 py-2 rounded-xl bg-[#E17335] text-white text-xs font-bold shadow-xs hover:bg-[#EC600F] active:scale-95 cursor-pointer transition-all flex-shrink-0"
+              >
+                Book Demo
+              </button>
+            </div>
           </div>
-
-          {/* Ministry Role Insights */}
-          <div className="p-4 bg-white rounded-2xl border border-[#ECECEC] shadow-card space-y-2.5">
-            <h4 className="text-xs font-bold font-cabin text-[#111518] flex items-center gap-2">
-              <HeartHandshake className="w-4 h-4 text-[#E17335]" />
-              <span>Recommended Ministry Placements</span>
-            </h4>
-            <div className="space-y-2 text-xs text-[#565D66]">
-              <div className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
-                <span>Small Group Leader, Discipleship Mentor, or Care Coordinator</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
-                <span>Hospitality Welcome Host or Community Outreach Champion</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#E17335] mt-0.5 flex-shrink-0" />
-                <span>Ministry Department Lead or New Campus Launch Core Member</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Book Consultation Banner */}
-          <div className="p-4 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-between gap-3">
-            <div>
-              <h5 className="text-xs font-bold font-cabin text-[#111518]">Need Pastor Consultation?</h5>
-              <p className="text-[11px] text-[#696767]">Schedule a 1-on-1 church mobilization demo</p>
-            </div>
-            <button
-              onClick={onOpenConsultation}
-              className="px-3.5 py-2 rounded-xl bg-[#E17335] text-white text-xs font-bold shadow-xs hover:bg-[#EC600F] active:scale-95 cursor-pointer transition-all flex-shrink-0"
-            >
-              Book Demo
-            </button>
-          </div>
-        </div>
-      ) : (
-        /* Quiz Questions Flow */
-        <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 flex flex-col justify-between">
+        ) : (
+          /* Quiz Questions Flow */
           <div className="space-y-4">
             {/* Progress Bar */}
             <div>
@@ -216,8 +217,8 @@ export default function MinistryFitQuiz({ onSelectAssessment, onOpenConsultation
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
