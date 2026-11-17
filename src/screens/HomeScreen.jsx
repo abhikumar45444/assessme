@@ -19,13 +19,17 @@ export default function HomeScreen({
   planCount = 0
 }) {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [scrollY, setScrollY] = useState(0)
+  const [headerHeight, setHeaderHeight] = useState(96)
+  const scrollRef = useRef(null)
+  const headerRef = useRef(null)
   const touchStartX = useRef(0)
+  const timerRef = useRef(null)
 
   const slides = [
     {
       id: 1,
       image: getAssetUrl('/cover-personality.jpg'),
-      logo: getAssetUrl('/logo-epersonality.png'),
       title: 'ePersonality™ Assessment',
       tagline: 'Explains the purpose for which a person was created by God',
       badge: 'Most Popular!',
@@ -35,33 +39,68 @@ export default function HomeScreen({
     {
       id: 2,
       image: getAssetUrl('/cover-gracegifts.jpg'),
-      logo: getAssetUrl('/logo-gracegifts.png'),
       title: 'GraceGifts™ Spiritual Gifts',
       tagline: 'The only gifts program filtered through personality dynamics',
-      badge: 'Zero Burnout',
+      badge: 'Personality Filtered',
       cta: 'Explore GraceGifts →',
       assessmentId: 'grace-gifts',
     },
     {
       id: 3,
       image: getAssetUrl('/cover-leadership.jpg'),
-      logo: getAssetUrl('/logo-leadership.png'),
       title: 'Leadership Style Test',
       tagline: 'Build highly effective staff & elder teams with stability',
       badge: 'Staff & Elders Ready',
       cta: 'Explore Leadership →',
       assessmentId: 'leadership-style',
     },
+    {
+      id: 4,
+      image: getAssetUrl('/cover-skills.jpg'),
+      title: 'Skills Tracking Program',
+      tagline: 'Organic skills tracking with micro-resumes for your whole church',
+      badge: 'Micro-Resumes',
+      cta: 'Explore Skills →',
+      assessmentId: 'skills-tracking',
+    },
   ]
 
-  // Auto-slide every 5.5s
+  // Measure header height dynamically to tuck the hero perfectly underneath
   useEffect(() => {
-    const timer = setInterval(() => {
+    if (!headerRef.current) return
+    const updateHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight)
+      }
+    }
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(headerRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  // Auto-advance through the hero slides every 3.5 seconds
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5500)
-    return () => clearInterval(timer)
+    }, 3500)
+  }
+
+  useEffect(() => {
+    resetTimer()
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
   }, [slides.length])
 
+  // Internal scroll listener to trigger scroll-linked collapse and header transition
+  const handleScroll = (e) => {
+    const top = e.currentTarget.scrollTop
+    setScrollY(top)
+  }
+
+  // Touch swipe support for manual carousel control
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX
   }
@@ -70,22 +109,42 @@ export default function HomeScreen({
     const deltaX = e.changedTouches[0].clientX - touchStartX.current
     if (deltaX > 45) {
       setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+      resetTimer()
     } else if (deltaX < -45) {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
+      resetTimer()
     }
   }
 
+  // Threshold: at scrollTop > 40, transition sticky top bar to solid dark slate
+  const isScrolled = scrollY > 40
+
+  // Parallax & subtle opacity fade for hero image
+  const parallaxOffset = Math.min(scrollY * 0.38, 85)
+  const heroOpacity = Math.max(0.15, 1 - scrollY / 300)
+
   return (
-    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden bg-[#F4F5F6] font-sans select-none">
-      {/* 1. Official AssessME Header (ALWAYS FIXED AT TOP - NEVER MOVES WHEN SCROLLING) */}
-      <header className="flex-shrink-0 sticky top-0 z-30 bg-[#111518] px-4 pt-3.5 md:pt-12 pb-3.5 border-b border-white/10 shadow-md">
+    <div
+      ref={scrollRef}
+      onScroll={handleScroll}
+      className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide relative h-full bg-[#F4F5F6] font-sans select-none"
+    >
+      {/* 1. TOP OVERLAY BAR (Sticky & Overlaid on Hero) */}
+      <header
+        ref={headerRef}
+        className={`sticky top-0 left-0 right-0 z-30 transition-all duration-300 px-4 pt-3.5 md:pt-12 pb-3.5 ${
+          isScrolled
+            ? 'bg-[#111518]/95 backdrop-blur-md shadow-sm border-b border-white/10'
+            : 'bg-gradient-to-b from-black/75 via-black/35 to-transparent border-b border-transparent shadow-none'
+        }`}
+      >
         <div className="flex items-center justify-between">
-          {/* Official AssessME White Logo */}
+          {/* AssessME White Wordmark Logo */}
           <div className="flex items-center gap-2">
             <img
               src={getAssetUrl('/logo-white.png')}
               alt="AssessME.org"
-              className="h-7 w-auto object-contain"
+              className="h-7 w-auto object-contain drop-shadow-sm"
             />
           </div>
 
@@ -93,7 +152,7 @@ export default function HomeScreen({
             {/* Church Plan cart quick pill */}
             <button
               onClick={onOpenPlan}
-              className="relative p-2 rounded-xl bg-white/10 text-white hover:bg-white/15 transition-all cursor-pointer"
+              className="relative p-2 rounded-xl bg-white/15 backdrop-blur-md text-white hover:bg-white/25 active:scale-95 transition-all cursor-pointer border border-white/10 shadow-xs"
               aria-label="View Plan"
             >
               <ShoppingBag className="w-4 h-4 text-orange-400" />
@@ -107,7 +166,7 @@ export default function HomeScreen({
             {/* Pastor Profile Avatar Button */}
             <button
               onClick={onOpenProfile}
-              className="w-8 h-8 rounded-full bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white flex items-center justify-center font-black text-xs shadow-md transition-all cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white flex items-center justify-center font-black text-xs shadow-md transition-all cursor-pointer ring-1 ring-white/20"
               aria-label="Pastor Profile"
             >
               AM
@@ -115,81 +174,110 @@ export default function HomeScreen({
           </div>
         </div>
 
-        {/* Network & ChMS status strip */}
-        <div className="mt-3 flex items-center justify-between pt-2.5 border-t border-white/10 text-xs">
+        {/* Network selector & ChMS status strip */}
+        <div className="mt-2.5 flex items-center justify-between pt-2 border-t border-white/15 text-xs">
           <button
             onClick={onOpenZoneModal}
-            className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer text-[11px] truncate max-w-[240px]"
+            className="flex items-center gap-1.5 text-slate-200 hover:text-white transition-colors cursor-pointer text-[11px] truncate max-w-[240px]"
           >
             <Church className="w-3.5 h-3.5 text-[#E17335] flex-shrink-0" />
-            <span className="truncate">{selectedZone}</span>
-            <ChevronRight className="w-3 h-3 text-slate-400" />
+            <span className="truncate drop-shadow-xs">{selectedZone}</span>
+            <ChevronRight className="w-3 h-3 text-slate-300" />
           </button>
 
-          <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-tight">
+          <span className="px-2 py-0.5 rounded-full bg-emerald-500/25 border border-emerald-400/30 text-emerald-300 text-[10px] font-bold tracking-tight backdrop-blur-xs">
             ChMS API Sync Active
           </span>
         </div>
       </header>
 
-      {/* 2. Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-4 space-y-5 pb-28">
-        {/* Authentic AssessME Hero Carousel */}
+      {/* 2. AUTO-ROTATING FULL-BLEED HERO BANNER (rounded-b-3xl) */}
+      <div
+        className="relative w-full rounded-b-3xl overflow-hidden shadow-card bg-[#111518]"
+        style={{
+          marginTop: -headerHeight, // Tucks the hero full-bleed right under the sticky header
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
-          className="relative rounded-3xl overflow-hidden shadow-card border border-slate-200 bg-[#1F2428] touch-pan-y"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
+          className="relative w-full h-[375px] md:h-[410px] overflow-hidden rounded-b-3xl"
+          style={{ opacity: heroOpacity }}
         >
-          <div className="relative h-60 w-full overflow-hidden">
-            <img
-              src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
-              className="w-full h-full object-cover object-top transition-all duration-700 brightness-[0.78]"
-            />
-            {/* Gradient Overlay in AssessME theme */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111518] via-[#111518]/60 to-transparent" />
-
-            <div className="absolute inset-0 p-5 flex flex-col justify-end text-white">
-              <span className="self-start px-2.5 py-1 rounded-full bg-[#E17335] text-white text-[10px] font-black uppercase tracking-wider mb-2 shadow-xs">
-                {slides[currentSlide].badge}
-              </span>
-
-              <h2 className="text-xl font-black font-cabin leading-tight mb-1">
-                {slides[currentSlide].title}
-              </h2>
-              <p className="text-xs text-slate-300 line-clamp-2 mb-3">
-                {slides[currentSlide].tagline}
-              </p>
-
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  onClick={() => {
-                    const item = ASSESSMENTS.find(a => a.id === slides[currentSlide].assessmentId)
-                    if (item) onSelectAssessment(item)
+          {/* Horizontal Carousel Track */}
+          <div
+            className="flex w-full h-full transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {slides.map((slide) => (
+              <div key={slide.id} className="w-full h-full flex-shrink-0 relative overflow-hidden">
+                {/* Hero Background Image with parallax transform */}
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover object-top brightness-[0.78]"
+                  style={{
+                    transform: `translateY(${parallaxOffset}px)`,
+                    transition: 'transform 0.1s ease-out',
                   }}
-                  className="px-4 py-2 rounded-xl bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white text-xs font-bold shadow-md cursor-pointer transition-all flex items-center gap-1.5"
-                >
-                  <span>{slides[currentSlide].cta}</span>
-                </button>
+                />
 
-                {/* Dot Indicators */}
-                <div className="flex items-center gap-1.5">
-                  {slides.map((s, idx) => (
+                {/* Top dark gradient overlay for top bar readability */}
+                <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/80 via-black/30 to-transparent pointer-events-none" />
+
+                {/* Dark bottom gradient and anchored slide content */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent flex flex-col justify-end p-5 pb-5">
+                  <h2 className="text-xl font-black font-cabin text-white leading-tight mb-1 drop-shadow-sm">
+                    {slide.title}
+                  </h2>
+                  <p className="text-xs text-slate-200 line-clamp-1 mb-3.5 drop-shadow-xs">
+                    {slide.tagline}
+                  </p>
+
+                  {/* Bottom Row: Dark Pill Tag (Left) + Primary Pill CTA (Right) */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-wider shadow-xs">
+                      {slide.badge}
+                    </span>
+
                     <button
-                      key={s.id}
-                      onClick={() => setCurrentSlide(idx)}
-                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                        currentSlide === idx ? 'w-5 bg-[#E17335]' : 'w-1.5 bg-white/40'
-                      }`}
-                      aria-label={`Slide ${idx + 1}`}
-                    />
-                  ))}
+                      onClick={() => {
+                        const item = ASSESSMENTS.find((a) => a.id === slide.assessmentId)
+                        if (item) onSelectAssessment(item)
+                      }}
+                      className="px-4 py-2 rounded-full bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white text-xs font-bold shadow-md cursor-pointer transition-all flex items-center gap-1.5"
+                    >
+                      <span>{slide.cta}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Subtle Carousel Pagination Dots */}
+          <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-1.5 pointer-events-none z-10">
+            {slides.map((s, idx) => (
+              <button
+                key={s.id}
+                onClick={() => {
+                  setCurrentSlide(idx)
+                  resetTimer()
+                }}
+                className={`h-1.5 rounded-full transition-all duration-300 pointer-events-auto cursor-pointer ${
+                  currentSlide === idx
+                    ? 'w-5 bg-[#E17335] shadow-xs'
+                    : 'w-1.5 bg-white/40 hover:bg-white/70'
+                }`}
+                aria-label={`Slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
+      </div>
 
+      {/* 3. HOME FEED CONTENT SHEET (Slides cleanly beneath the sticky top bar) */}
+      <div className="p-4 space-y-5 pb-28">
         {/* Core Value Proposition Banner */}
         <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card">
           <p className="text-[11px] font-black text-[#E17335] uppercase tracking-wider mb-1">
@@ -347,7 +435,7 @@ export default function HomeScreen({
             <span className="text-xs text-orange-300 font-semibold">Included in Church Suites</span>
             <button
               onClick={() => {
-                const bundle = ASSESSMENTS.find(a => a.id === 'all-inclusive-bundle')
+                const bundle = ASSESSMENTS.find((a) => a.id === 'all-inclusive-bundle')
                 if (bundle) onSelectAssessment(bundle)
               }}
               className="px-3 py-1.5 rounded-xl bg-[#E17335] hover:bg-[#EC600F] text-white text-xs font-bold cursor-pointer transition-all shadow-xs"
