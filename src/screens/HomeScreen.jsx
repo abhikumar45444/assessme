@@ -126,15 +126,15 @@ export default function HomeScreen({
     <div
       ref={scrollRef}
       onScroll={handleScroll}
-      className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide relative h-full bg-[#F4F5F6] font-sans select-none rounded-none md:rounded-[40px]"
+      className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide relative h-full bg-[#F4F5F6] font-sans select-none rounded-none md:rounded-t-[40px]"
     >
       {/* 1. TOP OVERLAY BAR (Sticky & Overlaid on Hero) */}
       <header
         ref={headerRef}
         className={`sticky top-0 left-0 right-0 z-30 transition-all duration-300 px-4 pt-3.5 md:pt-12 pb-3.5 rounded-none md:rounded-t-[40px] ${
           isScrolled
-            ? 'bg-[#111518] shadow-md border-b border-white/10'
-            : 'bg-gradient-to-b from-black/85 via-black/40 to-transparent border-b border-transparent shadow-none'
+            ? 'bg-[#111518] shadow-md'
+            : 'bg-gradient-to-b from-black/85 via-black/40 to-transparent shadow-none'
         }`}
       >
         <div className="flex items-center justify-between">

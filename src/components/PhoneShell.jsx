@@ -58,10 +58,15 @@ export default function PhoneShell({ children, isLocked = false }) {
             </div>
           </header>
 
-          {/* App container: rounded-[40px] and solid bg-[#111518] prevents any light-gray corner gap bleed */}
-          <main className={`flex-1 flex flex-col relative w-full h-full overflow-hidden rounded-none md:rounded-[40px] bg-[#111518] ${isLocked ? 'overflow-hidden' : ''}`}>
+          {/* App container: solid bg-[#F4F5F6] base matching homescreen background */}
+          <main className={`flex-1 flex flex-col relative w-full h-full overflow-hidden bg-[#F4F5F6] ${isLocked ? 'overflow-hidden' : ''}`}>
             {children}
           </main>
+
+          {/* iOS home indicator — ONLY on desktop mockup */}
+          <footer className="hidden md:flex h-5 items-center justify-center bg-[#F4F5F6] z-30 flex-shrink-0">
+            <div className="w-32 h-1 bg-slate-300 rounded-full" />
+          </footer>
         </div>
       </div>
     </div>

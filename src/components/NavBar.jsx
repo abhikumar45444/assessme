@@ -9,10 +9,10 @@ export default function NavBar({ activeTab, onTabChange, planCount = 0 }) {
   ]
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 z-30 pointer-events-none px-3.5 pb-2 pt-1">
+    <div className="sticky bottom-0 left-0 right-0 z-30 pointer-events-none px-3.5 pb-2 pt-1 bg-[#F4F5F6]">
       <nav
         aria-label="Bottom Navigation"
-        className="pointer-events-auto max-w-[390px] mx-auto bg-white/95 backdrop-blur-md rounded-[28px] shadow-[0_10px_30px_rgba(225,115,53,0.12),0_2px_8px_rgba(0,0,0,0.06)] border border-slate-100 px-2 py-1.5 flex items-center justify-around"
+        className="pointer-events-auto max-w-[390px] mx-auto bg-white/95 backdrop-blur-md rounded-[28px] shadow-[0_10px_30px_rgba(225,115,53,0.12),0_2px_8px_rgba(0,0,0,0.06)] border border-slate-100/90 px-2 py-1.5 flex items-center justify-around"
       >
         {tabs.map((tab) => {
           const Icon = tab.icon
