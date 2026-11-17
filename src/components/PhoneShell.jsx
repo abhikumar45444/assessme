@@ -58,8 +58,8 @@ export default function PhoneShell({ children, isLocked = false }) {
             </div>
           </header>
 
-          {/* App container */}
-          <main className={`flex-1 flex flex-col relative w-full h-full overflow-hidden bg-[#F4F5F6] ${isLocked ? 'overflow-hidden' : ''}`}>
+          {/* App container: rounded-[40px] and solid bg-[#111518] prevents any light-gray corner gap bleed */}
+          <main className={`flex-1 flex flex-col relative w-full h-full overflow-hidden rounded-none md:rounded-[40px] bg-[#111518] ${isLocked ? 'overflow-hidden' : ''}`}>
             {children}
           </main>
         </div>
