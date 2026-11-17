@@ -5,15 +5,15 @@
  */
 export default function PhoneShell({ children, isLocked = false }) {
   return (
-    <div className="h-screen h-[100dvh] w-full bg-[#F8FAFC] md:bg-gradient-to-br md:from-[#E2E8F0] md:via-[#EDF2F7] md:to-[#E2E8F0] flex items-center justify-center p-0 md:py-8 md:px-4 text-slate-900 select-none overflow-hidden">
+    <div className="h-screen h-[100dvh] w-full bg-[#F4F5F6] md:bg-gradient-to-br md:from-[#E2E4E8] md:via-[#ECECEC] md:to-[#E2E4E8] flex items-center justify-center p-0 md:py-8 md:px-4 text-slate-900 select-none overflow-hidden">
       {/* Phone chassis: only styled as a device on desktop (md:) */}
       <div className="
         w-full md:w-[414px]
         h-full md:h-[868px]
-        bg-[#F8FAFC] md:bg-[#0B192C]
+        bg-[#F4F5F6] md:bg-[#111518]
         rounded-none md:rounded-[56px]
         p-0 md:p-[12px]
-        shadow-none md:shadow-[0_30px_70px_-20px_rgba(11,25,44,0.4),0_0_0_1px_rgba(255,255,255,0.4),0_0_0_3px_#1E293B]
+        shadow-none md:shadow-[0_30px_70px_-20px_rgba(17,21,24,0.4),0_0_0_1px_rgba(255,255,255,0.2),0_0_0_3px_#1F2428]
         relative flex flex-col overflow-hidden
       ">
         {/* Left side physical buttons — only on desktop mockup */}
@@ -26,11 +26,11 @@ export default function PhoneShell({ children, isLocked = false }) {
         {/* Dynamic Island / notch — ONLY on desktop mockup */}
         <div className="hidden md:flex absolute top-4 left-1/2 -translate-x-1/2 w-[122px] h-[32px] bg-black rounded-full z-50 items-center justify-between px-3 shadow-md pointer-events-none">
           <div className="w-2.5 h-2.5 rounded-full bg-[#18181B] border border-neutral-800" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#0284C7]/80 border border-neutral-800" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#E17335]/80 border border-neutral-800" />
         </div>
 
         {/* Inner screen */}
-        <div className="w-full h-full bg-[#F8FAFC] md:bg-white rounded-none md:rounded-[44px] flex flex-col overflow-hidden relative">
+        <div className="w-full h-full bg-[#F4F5F6] rounded-none md:rounded-[44px] flex flex-col overflow-hidden relative">
           {/* iOS status bar — ONLY on desktop mockup */}
           <header className="hidden md:flex h-11 px-7 pt-2 items-center justify-between text-[13px] font-bold text-white z-40 select-none bg-transparent absolute top-0 left-0 right-0 pointer-events-none">
             <span>9:41</span>
@@ -58,15 +58,10 @@ export default function PhoneShell({ children, isLocked = false }) {
             </div>
           </header>
 
-          {/* App content */}
-          <main className={`flex-1 ${isLocked ? 'overflow-hidden' : 'overflow-y-auto'} no-scrollbar scrollbar-hide relative flex flex-col bg-[#F8FAFC]`}>
+          {/* App container */}
+          <main className={`flex-1 flex flex-col relative w-full h-full overflow-hidden ${isLocked ? 'overflow-hidden' : ''}`}>
             {children}
           </main>
-
-          {/* iOS home indicator — ONLY on desktop mockup */}
-          <footer className="hidden md:flex h-5 items-center justify-center bg-white z-30 flex-shrink-0">
-            <div className="w-32 h-1 bg-slate-300 rounded-full" />
-          </footer>
         </div>
       </div>
     </div>

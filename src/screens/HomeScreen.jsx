@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import {
   Church, Search, ShoppingBag, Phone, ChevronRight, Star,
   CheckCircle2, Heart, Sparkles, Clock, Award, ShieldCheck,
-  ArrowRight, Users, ClipboardList
+  ArrowRight, Users, ClipboardList, Check, BookOpen
 } from 'lucide-react'
-import { ASSESSMENTS, PASTORS, CHURCH_INSTALLATIONS } from '../data'
+import { ASSESSMENTS, PASTORS, STEPS } from '../data'
 import { getAssetUrl } from '../utils/assets'
 
 export default function HomeScreen({
@@ -24,371 +24,393 @@ export default function HomeScreen({
   const slides = [
     {
       id: 1,
-      image: getAssetUrl('/hero-gracegifts.jpg'),
-      title: 'GraceGifts™ Spiritual Gifts',
-      tagline: 'Biblical spiritual gifts filtered by temperament',
-      badge: '99% Volunteer Retention',
-      cta: 'Explore Gifts →',
-      assessmentId: 'grace-gifts',
-    },
-    {
-      id: 2,
-      image: getAssetUrl('/hero-personality.jpg'),
-      title: 'ePersonality™ Dynamics',
-      tagline: 'DISC-enhanced ministry team communication',
-      badge: 'Zero Team Friction',
-      cta: 'View Profile →',
+      image: getAssetUrl('/cover-personality.jpg'),
+      logo: getAssetUrl('/logo-epersonality.png'),
+      title: 'ePersonality™ Assessment',
+      tagline: 'Explains the purpose for which a person was created by God',
+      badge: 'Most Popular!',
+      cta: 'Explore ePersonality →',
       assessmentId: 'epersonality',
     },
     {
+      id: 2,
+      image: getAssetUrl('/cover-gracegifts.jpg'),
+      logo: getAssetUrl('/logo-gracegifts.png'),
+      title: 'GraceGifts™ Spiritual Gifts',
+      tagline: 'The only gifts program filtered through personality dynamics',
+      badge: 'Zero Burnout',
+      cta: 'Explore GraceGifts →',
+      assessmentId: 'grace-gifts',
+    },
+    {
       id: 3,
-      image: getAssetUrl('/hero-leadership.jpg'),
+      image: getAssetUrl('/cover-leadership.jpg'),
+      logo: getAssetUrl('/logo-leadership.png'),
       title: 'Leadership Style Test',
-      tagline: 'Strategic elder & ministry director placement',
-      badge: 'Staff & Elder Ready',
-      cta: 'View Test →',
+      tagline: 'Build highly effective staff & elder teams with stability',
+      badge: 'Staff & Elders Ready',
+      cta: 'Explore Leadership →',
       assessmentId: 'leadership-style',
     },
   ]
 
-  // Auto-rotate every 4 seconds
+  // Auto-slide every 5.5s
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 4000)
+    }, 5500)
     return () => clearInterval(timer)
-  }, [slides.length, currentSlide])
+  }, [slides.length])
 
-  // Touch swipe support
   const handleTouchStart = (e) => {
-    touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX
+    touchStartX.current = e.touches[0].clientX
   }
 
   const handleTouchEnd = (e) => {
-    const touchEndX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX
-    const diffX = touchStartX.current - touchEndX
-    if (diffX > 40) {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    } else if (diffX < -40) {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current
+    if (deltaX > 45) {
       setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+    } else if (deltaX < -45) {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
     }
   }
-
-  const handleCta = (slide) => {
-    const target = ASSESSMENTS.find((p) => p.id === slide.assessmentId)
-    if (target) {
-      onSelectAssessment(target)
-    } else {
-      onOpenAssessments()
-    }
-  }
-
-  const activeSlide = slides[currentSlide]
 
   return (
-    <div className="bg-[#F8FAFC]">
-      {/* 1. Auto-Rotating Hero Banner */}
-      <div
-        className="relative w-full h-[336px] rounded-b-[40px] overflow-hidden shadow-md flex-shrink-0 select-none bg-slate-900"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Background Images with smooth fade */}
-        {slides.map((slide, i) => (
-          <img
-            key={slide.id}
-            src={slide.image}
-            alt={slide.title}
-            className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              currentSlide === i ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-            }`}
-          />
-        ))}
-
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/85 pointer-events-none" />
-
-        {/* Top Header Bar */}
-        <div className="absolute top-3.5 md:top-12 left-0 right-0 px-4 flex items-center justify-between z-20">
-          {/* Top-left network button */}
-          <div
-            onClick={onOpenZoneModal}
-            className="flex items-center gap-2 cursor-pointer flex-1 min-w-0 mr-2 group"
-          >
-            <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 text-white flex-shrink-0 group-hover:bg-white/30 transition-colors">
-              <Church className="w-5 h-5 text-sky-300" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5 leading-none mb-1">
-                <span className="text-[10px] font-black text-white bg-[#0284C7] px-2 py-0.5 rounded-full shadow-xs uppercase tracking-tight flex-shrink-0">
-                  INSTANT SYNC
-                </span>
-                <span className="text-xs text-white/90 font-bold truncate">Church Hub</span>
-              </div>
-              <div className="flex items-center gap-1 text-sm font-black text-white drop-shadow-sm leading-none">
-                <span className="truncate">{selectedZone}</span>
-                <span className="text-[10px] text-sky-300 flex-shrink-0">▾</span>
-              </div>
-            </div>
+    <div className="flex-1 flex flex-col bg-[#F4F5F6] pb-24 font-sans select-none">
+      {/* 1. Official AssessME Header (Dark Charcoal #111518) */}
+      <div className="bg-[#111518] px-4 pt-3.5 md:pt-12 pb-3.5 border-b border-white/10 shadow-md">
+        <div className="flex items-center justify-between">
+          {/* Official AssessME White Logo */}
+          <div className="flex items-center gap-2">
+            <img
+              src={getAssetUrl('/logo-white.png')}
+              alt="AssessME.org"
+              className="h-7 w-auto object-contain"
+            />
           </div>
 
-          {/* Top Right Quick Actions */}
-          <div className="flex items-center gap-1.5 flex-shrink-0">
-            <button
-              onClick={onOpenAssessments}
-              className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition-colors cursor-pointer border border-white/10"
-              aria-label="Search Assessments"
-            >
-              <Search className="w-4 h-4" />
-            </button>
+          <div className="flex items-center gap-2">
+            {/* Church Plan cart quick pill */}
             <button
               onClick={onOpenPlan}
-              className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition-colors relative cursor-pointer border border-white/10"
-              aria-label="Church Plan"
+              className="relative p-2 rounded-xl bg-white/10 text-white hover:bg-white/15 transition-all cursor-pointer"
+              aria-label="View Plan"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-4 h-4 text-orange-400" />
               {planCount > 0 && (
-                <span className="w-2 h-2 rounded-full bg-[#0284C7] absolute top-2 right-2 ring-1.5 ring-black" />
+                <span className="absolute -top-1 -right-1 bg-[#E17335] text-white text-[9.5px] font-black w-4 h-4 rounded-full flex items-center justify-center ring-2 ring-[#111518]">
+                  {planCount}
+                </span>
               )}
             </button>
+
+            {/* Pastor Profile Avatar Button */}
             <button
               onClick={onOpenProfile}
-              className="w-9 h-9 rounded-full bg-[#0284C7] hover:bg-[#0369A1] active:scale-95 transition-all flex items-center justify-center text-white font-black text-xs shadow-md border border-white/30 cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white flex items-center justify-center font-black text-xs shadow-md transition-all cursor-pointer"
               aria-label="Pastor Profile"
-              title="Pastor Profile"
             >
               AM
             </button>
           </div>
         </div>
 
-        {/* Bottom Slide Content */}
-        <div className="absolute bottom-6 left-5 right-5 z-20">
-          <div className="transition-all duration-300">
-            <h1 className="text-2xl font-black text-white tracking-tight leading-tight mb-1 drop-shadow-md">
-              {activeSlide.title}
-            </h1>
-            <p className="text-xs text-sky-100/90 font-medium mb-3 drop-shadow-sm leading-snug">
-              {activeSlide.tagline}
-            </p>
-          </div>
+        {/* Network & ChMS status strip */}
+        <div className="mt-3 flex items-center justify-between pt-2.5 border-t border-white/10 text-xs">
+          <button
+            onClick={onOpenZoneModal}
+            className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors cursor-pointer text-[11px] truncate max-w-[240px]"
+          >
+            <Church className="w-3.5 h-3.5 text-[#E17335] flex-shrink-0" />
+            <span className="truncate">{selectedZone}</span>
+            <ChevronRight className="w-3 h-3 text-slate-400" />
+          </button>
 
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-white drop-shadow-sm">
-              {activeSlide.badge}
-            </span>
+          <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-tight">
+            ChMS API Sync Active
+          </span>
+        </div>
+      </div>
+
+      <div className="p-4 space-y-5">
+        {/* 2. Authentic AssessME Hero Carousel */}
+        <div
+          className="relative rounded-3xl overflow-hidden shadow-card border border-slate-200 bg-[#1F2428] touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="relative h-60 w-full overflow-hidden">
+            <img
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].title}
+              className="w-full h-full object-cover object-top transition-all duration-700 brightness-[0.78]"
+            />
+            {/* Gradient Overlay in AssessME theme */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111518] via-[#111518]/60 to-transparent" />
+
+            <div className="absolute inset-0 p-5 flex flex-col justify-end text-white">
+              <span className="self-start px-2.5 py-1 rounded-full bg-[#E17335] text-white text-[10px] font-black uppercase tracking-wider mb-2 shadow-xs">
+                {slides[currentSlide].badge}
+              </span>
+
+              <h2 className="text-xl font-black font-cabin leading-tight mb-1">
+                {slides[currentSlide].title}
+              </h2>
+              <p className="text-xs text-slate-300 line-clamp-2 mb-3">
+                {slides[currentSlide].tagline}
+              </p>
+
+              <div className="flex items-center justify-between pt-1">
+                <button
+                  onClick={() => {
+                    const item = ASSESSMENTS.find(a => a.id === slides[currentSlide].assessmentId)
+                    if (item) onSelectAssessment(item)
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white text-xs font-bold shadow-md cursor-pointer transition-all flex items-center gap-1.5"
+                >
+                  <span>{slides[currentSlide].cta}</span>
+                </button>
+
+                {/* Dot Indicators */}
+                <div className="flex items-center gap-1.5">
+                  {slides.map((s, idx) => (
+                    <button
+                      key={s.id}
+                      onClick={() => setCurrentSlide(idx)}
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                        currentSlide === idx ? 'w-5 bg-[#E17335]' : 'w-1.5 bg-white/40'
+                      }`}
+                      aria-label={`Slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Core Value Proposition Banner */}
+        <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card">
+          <p className="text-[11px] font-black text-[#E17335] uppercase tracking-wider mb-1">
+            DISCOVERING MINISTRY FIT
+          </p>
+          <h3 className="text-base font-black font-cabin text-[#111518] leading-snug mb-1.5">
+            More Data, Better Results: Mobilizing Church Members
+          </h3>
+          <p className="text-xs text-[#696767] leading-relaxed mb-3">
+            AssessME provides churches with 5 interconnected assessments filtered by temperament to prevent volunteer burnout and connect members to their calling.
+          </p>
+
+          <div className="grid grid-cols-2 gap-2">
             <button
-              onClick={() => handleCta(activeSlide)}
-              className="px-4 py-2.5 rounded-2xl bg-[#0284C7] hover:bg-[#0369A1] active:scale-95 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-sky-950/40 cursor-pointer transition-all"
+              onClick={onOpenAssessments}
+              className="py-2.5 px-3 rounded-2xl bg-[#E17335] hover:bg-[#EC600F] active:scale-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-orange cursor-pointer transition-all"
             >
-              <span>{activeSlide.cta}</span>
+              <span>Explore Assessments</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={onOpenQuiz}
+              className="py-2.5 px-3 rounded-2xl bg-[#111518] hover:bg-[#1F2428] active:scale-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm cursor-pointer transition-all"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+              <span>Ministry Fit Quiz</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 4. The 5 Core Assessments Grid */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-black font-cabin text-[#111518]">
+                AssessME Catalog
+              </h3>
+              <p className="text-[11px] text-[#696767]">
+                Human Resource Assessments for Christians & Churches
+              </p>
+            </div>
+            <button
+              onClick={onOpenAssessments}
+              className="text-xs font-bold text-[#E17335] hover:underline cursor-pointer"
+            >
+              View all (6)
             </button>
           </div>
 
-          {/* Pagination Pill Indicator & Dot Clicks */}
-          <div className="flex items-center gap-1.5 mt-3">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentSlide(i)}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  currentSlide === i ? 'w-5 h-1.5 bg-[#0284C7]' : 'w-1.5 h-1.5 bg-white/40'
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
+          <div className="grid grid-cols-2 gap-2.5">
+            {ASSESSMENTS.slice(0, 4).map((item) => (
+              <div
+                key={item.id}
+                onClick={() => onSelectAssessment(item)}
+                className="bg-white rounded-2xl p-3 border border-[#ECECEC] shadow-card hover:border-[#E17335] transition-all cursor-pointer flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="relative rounded-xl overflow-hidden mb-2 bg-slate-100 aspect-square">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-[#111518]/90 text-white text-[9px] font-black uppercase tracking-tight">
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <h4 className="text-xs font-bold text-[#111518] line-clamp-1 group-hover:text-[#E17335] transition-colors">
+                    {item.name}
+                  </h4>
+                  <p className="text-[11px] text-[#696767] line-clamp-2 mt-0.5 leading-snug">
+                    {item.tagline}
+                  </p>
+                </div>
+
+                <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs font-black text-[#E17335]">
+                    ${item.price} <span className="text-[10px] text-slate-400 font-normal">/ seat</span>
+                  </span>
+                  <div className="flex items-center gap-0.5 text-amber-500 text-[10px] font-bold">
+                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <span>{item.rating}</span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* 2. 6-Card AssessME Solutions Product Grid */}
-      <div className="px-5 mt-6 mb-3 flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4 text-[#0284C7]" />
-            <h3 className="text-sm font-bold text-[#0F172A]">AssessME Mobilization Toolkit</h3>
+        {/* 5. "6 Easy Steps to Assess Church Members" */}
+        <div className="bg-white rounded-3xl p-4 border border-[#ECECEC] shadow-card space-y-3">
+          <div>
+            <span className="text-[10px] font-black text-[#E17335] uppercase tracking-wider block">
+              CHURCH IMPLEMENTATION ROADMAP
+            </span>
+            <h3 className="text-sm font-black font-cabin text-[#111518] leading-snug mt-0.5">
+              6 Easy Steps to Assess Church Members
+            </h3>
+            <p className="text-xs text-[#696767] mt-0.5">
+              A proven workflow trusted by thousands of growing churches nationwide.
+            </p>
           </div>
-          <p className="text-[10px] text-[#64748B]">Data-driven volunteer placement & discipleship systems</p>
-        </div>
-        <div className="flex items-center gap-1 bg-[#F0F9FF] text-[#0284C7] px-2.5 py-1 rounded-full text-[10px] font-bold border border-sky-100">
-          <Clock className="w-3 h-3" />
-          <span>10-15 Min</span>
-        </div>
-      </div>
 
-      <div className="px-5 grid grid-cols-3 gap-2.5 mb-6">
-        {ASSESSMENTS.slice(0, 6).map((item) => (
-          <div
-            key={item.id}
-            onClick={() => onSelectAssessment(item)}
-            className="bg-white rounded-2xl border border-slate-100 p-2 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
+          <div className="space-y-2.5">
+            {STEPS.slice(0, 3).map((st) => (
+              <div
+                key={st.step}
+                className="p-2.5 rounded-2xl bg-[#F4F5F6] border border-slate-100 flex items-center gap-3"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#E17335] text-white flex items-center justify-center font-black font-cabin text-xs flex-shrink-0 shadow-xs">
+                  {st.step}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-[#111518]">{st.title}</h4>
+                  <p className="text-[11px] text-[#696767] leading-tight mt-0.5 line-clamp-2">
+                    {st.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={onOpenConsultation}
+            className="w-full py-2.5 px-3 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#E17335] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all"
           >
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 mb-1.5">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <span className="absolute top-1 right-1 bg-black/60 backdrop-blur-xs text-white px-1 py-0.5 rounded text-[8px] font-bold flex items-center gap-0.5">
-                <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-                {item.rating}
-              </span>
-            </div>
+            <span>Learn More About the 6 Steps</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
-            <div>
-              <h4 className="text-[11px] font-bold text-[#0F172A] leading-tight line-clamp-2 mb-0.5 group-hover:text-[#0284C7] transition-colors">
-                {item.name}
+        {/* 6. Discipleship Book & Sermon Kit ("Made for a Mission") */}
+        <div className="rounded-3xl p-4 bg-gradient-to-br from-[#111518] to-[#1F2428] text-white shadow-card space-y-3">
+          <div className="flex items-center gap-3">
+            <img
+              src={getAssetUrl('/book-mission.avif')}
+              alt="Made for a Mission"
+              className="w-16 h-24 object-cover rounded-xl shadow-md border border-white/10 flex-shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <span className="px-2 py-0.5 rounded-full bg-[#E17335] text-white text-[9px] font-black uppercase tracking-wider inline-block mb-1">
+                Sermon Series & Class Kit
+              </span>
+              <h4 className="text-sm font-black font-cabin leading-tight">
+                Made for a Mission
               </h4>
-              <p className="text-[9px] text-[#64748B] line-clamp-1 mb-1">
-                {item.tagline}
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-2">
+                Written by Chuck Ballard, Founder of AssessME.org. Includes a 4-week church sermon series kit with slides and teaching notes.
               </p>
             </div>
-
-            <div className="flex items-center justify-between pt-1 border-t border-slate-50 mt-auto">
-              <span className="text-[11px] font-black text-[#0284C7]">
-                ${item.price}
-              </span>
-              <span className="text-[9px] text-slate-400 font-semibold group-hover:text-[#0284C7] transition-colors">
-                Specs ›
-              </span>
-            </div>
           </div>
-        ))}
-      </div>
 
-      {/* 3. Church Deployments (2x2 Grid) */}
-      <div className="px-5 mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold text-[#0F172A]">Churches Mobilized</h3>
-          <span className="px-2.5 py-0.5 bg-[#F0F9FF] text-[#0284C7] text-[10px] font-bold rounded-full border border-sky-100">
-            2,500+ Ministries
-          </span>
+          <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+            <span className="text-xs text-orange-300 font-semibold">Included in Church Suites</span>
+            <button
+              onClick={() => {
+                const bundle = ASSESSMENTS.find(a => a.id === 'all-inclusive-bundle')
+                if (bundle) onSelectAssessment(bundle)
+              }}
+              className="px-3 py-1.5 rounded-xl bg-[#E17335] hover:bg-[#EC600F] text-white text-xs font-bold cursor-pointer transition-all shadow-xs"
+            >
+              View Church Suite
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          {CHURCH_INSTALLATIONS.map((install, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-xs group cursor-pointer"
-            >
-              <div className="relative aspect-video overflow-hidden bg-slate-100">
-                <img
-                  src={install.image}
-                  alt={install.churchName}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute top-2 left-2 bg-[#0F172A]/85 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded-full">
-                  {install.badge}
-                </span>
-              </div>
-              <div className="p-2.5">
-                <h4 className="text-xs font-bold text-[#0F172A] leading-tight mb-0.5 truncate">
-                  {install.churchName}
-                </h4>
-                <p className="text-[10px] text-[#64748B] leading-tight line-clamp-1">
-                  {install.system}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+        {/* 7. Pastoral Testimonials */}
+        <div className="space-y-3">
+          <div>
+            <h3 className="text-sm font-black font-cabin text-[#111518]">
+              Pastoral Endorsements
+            </h3>
+            <p className="text-[11px] text-[#696767]">
+              Proven impact across growing ministry congregations
+            </p>
+          </div>
 
-      {/* 4. Pastoral Endorsements & Trust Badges */}
-      <div className="px-5 mb-6">
-        <p className="text-[9.5px] font-black text-[#0284C7] uppercase tracking-wider mb-1">
-          MINISTRY TRUST & PASTORAL ENDORSEMENTS
-        </p>
-        <h3 className="text-base font-extrabold text-[#0F172A] leading-tight mb-3">
-          Used & Recommended by Pastors Worldwide
-        </h3>
-
-        <div className="space-y-3 mb-4">
-          {PASTORS.map((pastor, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-slate-100 p-3.5 shadow-xs flex items-start gap-3"
-            >
-              <img
-                src={pastor.image}
-                alt={pastor.name}
-                className="w-12 h-12 rounded-full object-cover border border-slate-100 flex-shrink-0 bg-slate-100"
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-0.5">
-                  <h4 className="text-xs font-bold text-[#0F172A] truncate">
-                    {pastor.name}
-                  </h4>
-                  <span className="text-[9px] font-semibold text-slate-400 bg-slate-50 px-1.5 py-0.2 rounded border border-slate-100 flex-shrink-0">
-                    {pastor.location}
-                  </span>
+          <div className="space-y-2.5">
+            {PASTORS.map((pastor) => (
+              <div
+                key={pastor.name}
+                className="bg-white p-3.5 rounded-2xl border border-[#ECECEC] shadow-card space-y-2"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h5 className="text-xs font-bold text-[#111518]">{pastor.name}</h5>
+                    <p className="text-[10px] text-[#696767]">{pastor.title} • {pastor.location}</p>
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-orange-100 text-[#E17335] flex items-center justify-center font-bold text-[10px]">
+                    {pastor.initials}
+                  </div>
                 </div>
-                <p className="text-[10px] font-bold text-[#0284C7] mb-1.5">
-                  {pastor.title}
-                </p>
-                <p className="text-[11px] text-[#64748B] italic leading-snug">
+                <p className="text-xs italic text-[#565D66] leading-relaxed">
                   "{pastor.quote}"
                 </p>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 3 Trust Badges */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="p-2.5 rounded-2xl bg-white border border-slate-100 shadow-xs text-center">
-            <ShieldCheck className="w-4 h-4 text-[#0284C7] mx-auto mb-1" />
-            <span className="text-[10px] font-black text-[#0F172A] block leading-tight">100% Biblical</span>
-            <span className="text-[8.5px] text-[#64748B]">Scripture Based</span>
-          </div>
-          <div className="p-2.5 rounded-2xl bg-white border border-slate-100 shadow-xs text-center">
-            <Users className="w-4 h-4 text-[#16A34A] mx-auto mb-1" />
-            <span className="text-[10px] font-black text-[#0F172A] block leading-tight">ChMS Verified</span>
-            <span className="text-[8.5px] text-[#64748B]">Pushpay & PCO</span>
-          </div>
-          <div className="p-2.5 rounded-2xl bg-white border border-slate-100 shadow-xs text-center">
-            <Award className="w-4 h-4 text-[#F59E0B] mx-auto mb-1" />
-            <span className="text-[10px] font-black text-[#0F172A] block leading-tight">Zero Burnout</span>
-            <span className="text-[8.5px] text-[#64748B]">Sweet Spot Fit</span>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* 5. Dark Navy Ministry Consultation Card (#0B192C) */}
-      <div className="px-5 pb-8">
-        <div className="bg-[#0B192C] rounded-[20px] p-5 shadow-xl shadow-slate-900/20 text-left border border-slate-800/80">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[10px] font-extrabold tracking-wider text-white bg-[#0284C7] px-2.5 py-0.5 rounded-full uppercase shadow-xs">
-              FREE CHURCH CONSULTATION
-            </span>
-            <span className="text-xs text-slate-400 font-medium">Zero Obligation</span>
+        {/* 8. Church Consultation Booking Banner */}
+        <div className="p-4 rounded-3xl bg-[#E17335] text-white shadow-orange space-y-3">
+          <div className="flex items-center gap-2 text-orange-100 text-xs font-bold uppercase tracking-wider">
+            <Church className="w-4 h-4 text-white" />
+            <span>Pastoral Consultation & ChMS Demo</span>
           </div>
 
-          <h3 className="text-base font-bold text-white leading-snug mb-1.5">
-            Evaluate Your Church Volunteer Health
+          <h3 className="text-lg font-black font-cabin leading-tight">
+            Equip Your Entire Congregation Today
           </h3>
-
-          <p className="text-xs text-[#94A3B8] mb-4 leading-relaxed">
-            An AssessME church mobilization specialist will analyze your ChMS workflow and demonstrate automated volunteer placement.
+          <p className="text-xs text-orange-100/90 leading-relaxed">
+            Schedule a free 1-on-1 walkthrough with an AssessME church mobilization specialist. We'll show you how to connect Planning Center or Pushpay.
           </p>
 
-          <div className="flex items-center gap-2.5">
-            <a
-              href="tel:8002445999"
-              className="flex-1 py-3 px-3.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-sky-950/40 transition-all cursor-pointer"
-            >
-              <Phone className="w-3.5 h-3.5 text-white" />
-              <span>Call (800) 244-5999</span>
-            </a>
-
-            <button
-              onClick={onOpenQuiz}
-              className="py-3 px-4 rounded-xl bg-[#1E293B] hover:bg-[#334155] active:scale-95 text-white font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-slate-700/80 shadow-xs"
-            >
-              <ClipboardList className="w-3.5 h-3.5 text-white" />
-              <span>Fit Quiz</span>
-            </button>
-          </div>
+          <button
+            onClick={onOpenConsultation}
+            className="w-full py-3 px-4 rounded-2xl bg-[#111518] hover:bg-[#1F2428] active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer transition-all"
+          >
+            <span>Schedule Free Pastoral Consultation</span>
+            <ArrowRight className="w-4 h-4 text-orange-400" />
+          </button>
         </div>
       </div>
     </div>

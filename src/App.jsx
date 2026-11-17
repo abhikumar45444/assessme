@@ -17,13 +17,13 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home')
   const [plan, setPlan] = useState([
     {
-      id: 'grace-gifts',
-      name: 'GraceGifts™ Spiritual Gifts Assessment',
-      category: 'spiritual-gifts',
-      tagline: 'Biblical Spiritual Gifts Filtered by Personality',
+      id: 'epersonality',
+      name: 'ePersonality™ Assessment',
+      category: 'personality',
+      tagline: 'Explains the purpose for which a person was created by God',
       price: 12,
       qty: 10,
-      image: getAssetUrl('/hero-gracegifts.jpg'),
+      image: getAssetUrl('/cover-personality.jpg'),
     },
   ])
   const [selectedAssessment, setSelectedAssessment] = useState(null)

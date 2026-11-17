@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Sparkles, Users, Award } from 'lucide-react'
+import { getAssetUrl } from '../utils/assets'
 
 export default function SplashScreen({ onDone }) {
   useEffect(() => {
@@ -10,39 +11,43 @@ export default function SplashScreen({ onDone }) {
   }, [onDone])
 
   return (
-    <div className="flex-1 w-full h-full bg-gradient-to-br from-[#0B192C] via-[#0F172A] to-[#0284C7] flex flex-col items-center justify-center p-6 text-white text-center select-none animate-fade-in relative overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 -left-20 w-64 h-64 rounded-full bg-sky-500/15 blur-3xl" />
-      <div className="absolute bottom-1/4 -right-20 w-64 h-64 rounded-full bg-blue-600/20 blur-3xl" />
+    <div className="flex-1 w-full h-full bg-[#111518] flex flex-col items-center justify-center p-6 text-white text-center select-none animate-fade-in relative overflow-hidden">
+      {/* Background glow in warm terracotta orange */}
+      <div className="absolute top-1/4 -left-20 w-64 h-64 rounded-full bg-[#E17335]/15 blur-3xl" />
+      <div className="absolute bottom-1/4 -right-20 w-64 h-64 rounded-full bg-[#E17335]/20 blur-3xl" />
 
-      {/* Center animated logo */}
+      {/* Official AssessME Logo Showcase */}
       <div className="relative mb-6">
-        <div className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl relative z-10 animate-bounce">
-          <Sparkles className="w-10 h-10 text-sky-300" />
+        <div className="p-4 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center shadow-2xl relative z-10">
+          <img
+            src={getAssetUrl('/logo-white.png')}
+            alt="AssessME.org"
+            className="h-10 w-auto object-contain drop-shadow-md"
+          />
         </div>
-        <div className="absolute -inset-2 bg-gradient-to-r from-sky-400 to-blue-600 rounded-3xl opacity-40 blur-md animate-pulse" />
+        <div className="absolute -inset-2 bg-gradient-to-r from-[#E17335] to-[#EC600F] rounded-3xl opacity-30 blur-lg animate-pulse" />
       </div>
 
-      <div className="space-y-1 relative z-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-black uppercase tracking-widest text-sky-200 mb-2">
+      <div className="space-y-1.5 relative z-10 max-w-xs">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] font-black uppercase tracking-widest text-orange-400 mb-2">
           <Users className="w-3 h-3" />
-          <span>Ministry Human Resource Platform</span>
+          <span>Christian & Church Human Resources</span>
         </div>
-        <h1 className="text-3xl font-black tracking-tight text-white drop-shadow-md">
-          Assess<span className="text-[#38BDF8]">ME</span>.org
-        </h1>
-        <p className="text-xs text-sky-200/80 font-medium max-w-xs leading-relaxed">
-          Mobilizing Disciples into Effective Ministry Service
+        <h2 className="text-sm font-bold font-cabin text-slate-200">
+          Discovering Authentic Ministry Fit
+        </h2>
+        <p className="text-xs text-slate-400 font-medium leading-relaxed">
+          Our assessments help churches MAKE & MOBILIZE more disciples of Jesus Christ!
         </p>
       </div>
 
-      <div className="mt-12 flex items-center gap-1.5 text-[11px] text-sky-200/60 font-semibold">
-        <Award className="w-3.5 h-3.5 text-sky-300" />
-        <span>Trusted by 2,500+ Churches Worldwide</span>
+      <div className="mt-12 flex items-center gap-1.5 text-[11px] text-slate-400 font-semibold">
+        <Award className="w-3.5 h-3.5 text-[#E17335]" />
+        <span>Trusted by Thousands of Growing Churches</span>
       </div>
 
       <div className="absolute bottom-8 flex gap-1.5">
-        <div className="w-2 h-2 rounded-full bg-white animate-ping" />
+        <div className="w-2 h-2 rounded-full bg-[#E17335] animate-ping" />
         <div className="w-2 h-2 rounded-full bg-white/40" />
         <div className="w-2 h-2 rounded-full bg-white/40" />
       </div>

@@ -1,298 +1,316 @@
 import { getAssetUrl } from './utils/assets'
 
-// Assessment product catalog data
+// Authentic AssessME.org Assessment Catalog Data
 export const ASSESSMENTS = [
   {
-    id: 'grace-gifts',
-    name: 'GraceGifts™ Spiritual Gifts Assessment',
-    category: 'spiritual-gifts',
-    tagline: 'Biblical Spiritual Gifts Filtered by Personality',
-    price: 12,
-    originalPrice: 19,
-    annualPrice: 299,
-    rating: 4.99,
-    reviewsCount: 1420,
-    badge: 'Flagship',
-    isBestSeller: true,
-    image: getAssetUrl('/hero-gracegifts.jpg'),
-    gallery: [
-      getAssetUrl('/hero-gracegifts.jpg'),
-      getAssetUrl('/sample-report-1.jpg'),
-      getAssetUrl('/church-team-1.jpg')
-    ],
-    features: [
-      'Identifies 24 distinct New Testament spiritual gifts with contextual placement scoring',
-      'Filters spiritual gifts through personal temperament so members understand HOW they serve',
-      'Automated 1-way and 2-way API synchronization into Planning Center and Pushpay ChMS profiles',
-      'Includes individual 8-page actionable PDF growth reports with ministry role suggestions'
-    ],
-    dimensions: [
-      { num: 1, title: 'Motivational Gifts Inventory', desc: 'Evaluates inner spiritual motivation based on Romans 12.' },
-      { num: 2, title: 'Ministry Manifestation Matrix', desc: 'Contextualizes gifts for modern volunteer team dynamics (1 Cor 12).' },
-      { num: 3, title: 'Temperament Synergy Filter', desc: 'Analyzes whether a member thrives in high-people or high-task roles.' },
-      { num: 4, title: 'Burnout Prevention Indicator', desc: 'Alerts pastors if a volunteer is currently serving out of their calling.' },
-      { num: 5, title: 'Custom Church Ministry Role Match', desc: 'Maps candidate gifts directly to your open volunteer positions.' }
-    ],
-    specs: {
-      completionTime: '12 - 15 Minutes',
-      questionsCount: '60 Contextual Scenarios',
-      delivery: 'Instant Online + Mobile Friendly',
-      integrations: 'Planning Center, Pushpay, CCB, Breeze',
-      reportFormat: 'Interactive Web Dashboard + 8-Page PDF'
-    }
-  },
-  {
     id: 'epersonality',
-    name: 'ePersonality™ Ministry Temperament Profile',
+    name: 'ePersonality™ Assessment',
     category: 'personality',
-    tagline: 'DISC-Enhanced Ministry Behavior Assessment',
+    tagline: 'Explains the purpose for which a person was created by God',
     price: 12,
     originalPrice: 19,
     annualPrice: 279,
-    rating: 4.96,
-    reviewsCount: 890,
-    badge: 'Team Dynamics',
+    rating: 4.98,
+    reviewsCount: 1640,
+    badge: 'Most Popular!',
     isBestSeller: true,
-    image: getAssetUrl('/hero-personality.jpg'),
+    logo: getAssetUrl('/logo-epersonality.png'),
+    image: getAssetUrl('/cover-personality.jpg'),
     gallery: [
-      getAssetUrl('/hero-personality.jpg'),
-      getAssetUrl('/sample-report-2.jpg'),
-      getAssetUrl('/church-team-2.jpg')
+      getAssetUrl('/cover-personality.jpg'),
+      getAssetUrl('/cellphone.webp'),
+      getAssetUrl('/report-sample.png')
     ],
     features: [
+      'Explains biblical temperament dynamics and why people behave the way they do',
       'Tailored specifically for church and ministry cultures, avoiding sterile corporate jargon',
       'Pinpoints natural communication styles, relational triggers, and conflict resolution defaults',
-      'Equips small group leaders and ministry heads to build harmonious, complementary teams',
-      'Full compatibility with Church Management System member profiles'
+      'Live 2-way sync into Pushpay CCB & Planning Center Online member profile cards'
     ],
     dimensions: [
-      { num: 1, title: 'Directive (Dominance in Ministry)', desc: 'Measures pace, decisiveness, and willingness to pioneer new ministries.' },
-      { num: 2, title: 'Interactive (Influence & Welcome)', desc: 'Assesses warmth, charisma, and hospitality in volunteer roles.' },
-      { num: 3, title: 'Supportive (Steadiness & Care)', desc: 'Evaluates loyalty, reliability, patience, and pastoral empathy.' },
-      { num: 4, title: 'Conscientious (Clarity & Detail)', desc: 'Measures biblical thoroughness, logistical excellence, and accuracy.' }
+      { num: 1, title: 'Directive (Dominance)', desc: 'Measures pioneering vision, decisive initiative, and willingness to lead new ministry frontiers.' },
+      { num: 2, title: 'Interactive (Influence)', desc: 'Evaluates warmth, charisma, relational hospitality, and enthusiasm in bringing people to Christ.' },
+      { num: 3, title: 'Supportive (Steadiness)', desc: 'Assesses pastoral loyalty, patience, empathy, reliability, and dependable long-term team service.' },
+      { num: 4, title: 'Conscientious (Clarity)', desc: 'Measures biblical thoroughness, logistical excellence, accuracy, and administrative stewardship.' }
     ],
     specs: {
       completionTime: '10 - 12 Minutes',
       questionsCount: '48 Forced-Choice Quadrants',
-      delivery: 'Instant Online Dashboard',
-      integrations: 'All Major ChMS Platforms',
-      reportFormat: 'Comprehensive 10-Page Profile'
+      delivery: 'Instant Online + Mobile Interface',
+      integrations: 'Planning Center, Pushpay CCB, Breeze',
+      reportFormat: 'Comprehensive 10-Page Personal Profile'
+    }
+  },
+  {
+    id: 'grace-gifts',
+    name: 'GraceGifts™ Spiritual Gifts',
+    category: 'spiritual-gifts',
+    tagline: 'The only Spiritual Gifts program filtered through personality dynamics',
+    price: 12,
+    originalPrice: 19,
+    annualPrice: 299,
+    rating: 4.99,
+    reviewsCount: 2180,
+    badge: 'Personality Filtered',
+    isBestSeller: true,
+    logo: getAssetUrl('/logo-gracegifts.png'),
+    image: getAssetUrl('/cover-gracegifts.jpg'),
+    gallery: [
+      getAssetUrl('/cover-gracegifts.jpg'),
+      getAssetUrl('/report-sample.png'),
+      getAssetUrl('/cellphone.webp')
+    ],
+    features: [
+      'Evaluates New Testament spiritual gifts filtered by temperament, creating authentic "Gift Expressions"',
+      'Eliminates volunteer burnout by placing people where gifts and natural temperament synergize',
+      'Automated placement engine maps candidate gifts directly into your open volunteer positions',
+      'Direct API synchronization into Planning Center People and Pushpay ChMS'
+    ],
+    dimensions: [
+      { num: 1, title: 'Romans 12 Motivational Gifts', desc: 'Inner spiritual drive determining core motivations in Christian service.' },
+      { num: 2, title: '1 Cor 12 Manifestation Matrix', desc: 'Contextual expression in collaborative team ministries.' },
+      { num: 3, title: 'Temperament Synergy Filter', desc: 'Identifies whether candidates thrive in task-oriented or people-intensive roles.' },
+      { num: 4, title: 'Burnout Prevention Indicator', desc: 'Alerts leadership if members are currently serving out of alignment with their calling.' }
+    ],
+    specs: {
+      completionTime: '12 - 15 Minutes',
+      questionsCount: '60 Contextual Ministry Scenarios',
+      delivery: 'Instant Online + Mobile Friendly',
+      integrations: 'Planning Center, Pushpay CCB, Breeze',
+      reportFormat: 'Interactive Web Dashboard + 8-Page PDF'
     }
   },
   {
     id: 'leadership-style',
     name: 'Leadership Style Assessment',
     category: 'leadership',
-    tagline: 'Staff, Elder & Ministry Coordinator Placement',
+    tagline: 'Build highly effective leadership teams with longevity & stability',
     price: 15,
     originalPrice: 24,
     annualPrice: 349,
-    rating: 4.93,
-    reviewsCount: 610,
+    rating: 4.95,
+    reviewsCount: 840,
     badge: 'Staff & Elders',
     isBestSeller: false,
-    image: getAssetUrl('/hero-leadership.jpg'),
+    logo: getAssetUrl('/logo-leadership.png'),
+    image: getAssetUrl('/cover-leadership.jpg'),
     gallery: [
-      getAssetUrl('/hero-leadership.jpg'),
-      getAssetUrl('/sample-report-1.jpg'),
-      getAssetUrl('/church-team-1.jpg')
+      getAssetUrl('/cover-leadership.jpg'),
+      getAssetUrl('/class-kit.webp'),
+      getAssetUrl('/cellphone.webp')
     ],
     features: [
-      'Evaluates high-capacity leaders across 4 essential ministry leadership pillars',
-      'Ideal for screening pastoral candidates, deacon boards, and youth ministry directors',
-      'Provides strategic insights into strategic vs pastoral decision-making under pressure',
-      'Generates interview questions tailored to the candidate profile'
+      'Used to build balanced elder boards, pastoral staff, and key ministry coordinators',
+      'Identifies strategic visionaries, operational managers, relational developers, and pioneers',
+      'Reveals organizational blind spots and builds complementary leadership teams',
+      'Essential for pastoral search committees and staff restructuring'
     ],
     dimensions: [
-      { num: 1, title: 'Visionary Pioneer', desc: 'Ability to cast Kingdom vision and rally people into new territories.' },
-      { num: 2, title: 'Shepherd Protector', desc: 'Heart for pastoral care, member counseling, and spiritual safety.' },
-      { num: 3, title: 'Operational Architect', desc: 'Systems builder optimizing budget, facilities, and staff workflows.' },
-      { num: 4, title: 'Empowering Developer', desc: 'Multiplies leaders through intentional discipleship and delegation.' }
+      { num: 1, title: 'Visionary Pioneer', desc: 'Focuses on strategic direction, spiritual breakthrough, and launching new ministries.' },
+      { num: 2, title: 'Operational Shepherd', desc: 'Excels at team harmony, pastoral oversight, and practical project execution.' },
+      { num: 3, title: 'Consensus Developer', desc: 'Brings elder boards and diverse volunteer groups into unified decision-making.' },
+      { num: 4, title: 'Architectural Builder', desc: 'Constructs sustainable ministry systems and scalable volunteer infrastructure.' }
     ],
     specs: {
-      completionTime: '15 - 18 Minutes',
-      questionsCount: '72 Evaluative Questions',
-      delivery: 'Confidential Candidate Link',
-      integrations: 'Church Staff & HR Pipelines',
-      reportFormat: '14-Page Executive Dossier'
+      completionTime: '15 Minutes',
+      questionsCount: '52 Leadership Scenarios',
+      delivery: 'Instant Online Dashboard',
+      integrations: 'Planning Center, Pushpay CCB',
+      reportFormat: 'Comprehensive Leadership Analysis Report'
     }
   },
   {
     id: 'skills-tracking',
-    name: 'Skills & Trades Marketplace Tracker',
+    name: 'Skills Tracking Program',
     category: 'skills',
-    tagline: 'Professional & Marketplace Trades Inventory',
-    price: 8,
-    originalPrice: 14,
-    annualPrice: 199,
-    rating: 4.88,
-    reviewsCount: 430,
-    badge: 'Practical Trades',
+    tagline: 'Organic skills tracking with micro-resumes for your whole church',
+    price: 9,
+    originalPrice: 15,
+    annualPrice: 229,
+    rating: 4.92,
+    reviewsCount: 710,
+    badge: 'Micro-Resumes',
     isBestSeller: false,
-    image: getAssetUrl('/hero-skills.jpg'),
+    logo: getAssetUrl('/logo-skills.webp'),
+    image: getAssetUrl('/cover-skills.jpg'),
     gallery: [
-      getAssetUrl('/hero-skills.jpg'),
-      getAssetUrl('/sample-report-2.jpg'),
-      getAssetUrl('/church-team-2.jpg')
+      getAssetUrl('/cover-skills.jpg'),
+      getAssetUrl('/interface-search.webp'),
+      getAssetUrl('/cellphone.webp')
     ],
     features: [
-      'Uncovers hidden skills in your pews: audio/video, carpentry, legal, accounting, IT, counseling',
-      'Saves thousands of dollars annually in church contractor and maintenance expenses',
-      'Engages members who prefer hands-on, practical service over upfront public roles',
-      'Searchable skills database with one-click volunteer blast messaging'
+      'Catalogs trades, technical proficiencies, professional licenses, and vocational skills',
+      'Includes candidate micro-resumes so church staff can discover hidden talents in the pews',
+      'Instant search engine finds plumbers, accountants, video editors, and audio techs',
+      'Reduces church facility and production costs by activating in-house member expertise'
     ],
     dimensions: [
-      { num: 1, title: 'Media, Tech & Creative', desc: 'Video production, audio engineering, lighting, graphic design, social media.' },
-      { num: 2, title: 'Construction & Trades', desc: 'Electrical, plumbing, carpentry, HVAC, landscaping, facility repair.' },
-      { num: 3, title: 'Professional & Governance', desc: 'Legal counsel, CPA finance, medical first aid, human resources.' },
-      { num: 4, title: 'Hospitality & Events', desc: 'Culinary prep, event coordination, security, transportation.' }
+      { num: 1, title: 'Trades & Physical Crafts', desc: 'Electrical, plumbing, carpentry, construction, and facility maintenance.' },
+      { num: 2, title: 'Creative & Media Tech', desc: 'Audio engineering, lighting, video editing, graphic design, and web.' },
+      { num: 3, title: 'Professional & Legal', desc: 'Accounting, finance, legal counsel, HR, and project management.' },
+      { num: 4, title: 'Educational & Care', desc: 'Teaching, medical/nursing, counseling, translation, and tutoring.' }
     ],
     specs: {
-      completionTime: '5 - 8 Minutes',
-      questionsCount: 'Dynamic Multi-Select Grid',
-      delivery: 'Mobile Check-In Integration',
-      integrations: 'Planning Center Services & People',
-      reportFormat: 'Searchable Church-Wide Directory'
+      completionTime: '8 - 10 Minutes',
+      questionsCount: 'Customizable Skill Inventory',
+      delivery: 'Instant Member Portal',
+      integrations: 'Planning Center, Pushpay CCB',
+      reportFormat: 'Instant Searchable Talent Database'
     }
   },
   {
     id: 'nextsteps-discipleship',
-    name: 'NextSteps™ Discipleship Pathway Tracker',
+    name: 'NextSteps™ Discipleship Tracking',
     category: 'discipleship',
-    tagline: 'Spiritual Formation & Growth Tracking Engine',
-    price: 18,
-    originalPrice: 29,
-    annualPrice: 399,
-    rating: 4.97,
-    reviewsCount: 520,
-    badge: 'Formation',
+    tagline: '98% customizable discipleship tracking & spiritual maturity growth',
+    price: 12,
+    originalPrice: 18,
+    annualPrice: 289,
+    rating: 4.96,
+    reviewsCount: 650,
+    badge: 'Discipleship Track',
     isBestSeller: false,
-    image: getAssetUrl('/hero-gracegifts.jpg'),
+    logo: getAssetUrl('/logo-nextsteps.webp'),
+    image: getAssetUrl('/cover-nextsteps.jpg'),
     gallery: [
-      getAssetUrl('/hero-gracegifts.jpg'),
-      getAssetUrl('/sample-report-1.jpg'),
-      getAssetUrl('/church-team-1.jpg')
+      getAssetUrl('/cover-nextsteps.jpg'),
+      getAssetUrl('/interface-invite.webp'),
+      getAssetUrl('/cellphone.webp')
     ],
     features: [
-      'Customizable discipleship pipeline measuring prayer life, scripture engagement, and stewardship',
-      'Helps pastors identify who is ready to be discipled vs who is ready to become a disciple-maker',
-      'Automated check-ins and encouragement reminders sent to candidate phones',
-      'Cohorts and small group spiritual health dashboards'
+      'Revolutionary spiritual growth tracking system adaptable to your church discipleship model',
+      'Customizable spiritual maturity milestones: Baptism, small groups, daily word, tithing',
+      'Equips small group pastors and mentors with real-time discipleship progression analytics',
+      'Keeps members engaged and progressing forward toward biblical maturity'
     ],
     dimensions: [
-      { num: 1, title: 'Spiritual Habits Baseline', desc: 'Consistent prayer, personal devotion, and Sabbath rhythm tracking.' },
-      { num: 2, title: 'Biblical Literacy & Doctrine', desc: 'Sound understanding of essential Christian faith tenets.' },
-      { num: 3, title: 'Kingdom Stewardship', desc: 'Generosity, hospitality, and sacrificial service orientation.' },
-      { num: 4, title: 'Missional Living', desc: 'Personal evangelism, local outreach, and global mission engagement.' }
+      { num: 1, title: 'Foundations of Faith', desc: 'Salvation clarity, water baptism, and foundational scripture literacy.' },
+      { num: 2, title: 'Spiritual Disciplines', desc: 'Daily devotional prayer, biblical meditation, and faithful generosity.' },
+      { num: 3, title: 'Relational Community', desc: 'Consistent small group fellowship, accountability, and mutual care.' },
+      { num: 4, title: 'Kingdom Mobilization', desc: 'Serving on ministry teams, mentoring younger disciples, and sharing faith.' }
     ],
     specs: {
-      completionTime: '15 Minutes Periodic Check-in',
-      questionsCount: '50 Reflection Rubrics',
-      delivery: 'Self-Paced Mobile Journal',
-      integrations: 'Pushpay Groups, PCO Groups',
-      reportFormat: 'Discipleship Journey Roadmap'
+      completionTime: 'Self-Paced / Mentor Guided',
+      questionsCount: 'Dynamic Milestones (98% Configurable)',
+      delivery: 'Mobile + Web Portal',
+      integrations: 'Planning Center, Pushpay CCB',
+      reportFormat: 'Interactive Growth Dashboard'
     }
   },
   {
     id: 'all-inclusive-bundle',
-    name: 'Complete Church Mobilization Suite',
+    name: 'All-Inclusive Church Mobilization Suite',
     category: 'bundle',
-    tagline: 'Unlimited Congregation Assessment License',
+    tagline: 'Unlimited congregation assessment license with ChMS sync',
     price: 499,
     originalPrice: 799,
     annualPrice: 499,
     rating: 5.0,
-    reviewsCount: 780,
-    badge: 'Best Value',
+    reviewsCount: 920,
+    badge: 'Best Church Value',
     isBestSeller: true,
-    image: getAssetUrl('/hero-gracegifts.jpg'),
+    logo: getAssetUrl('/logo-white.png'),
+    image: getAssetUrl('/cellphone.webp'),
     gallery: [
-      getAssetUrl('/hero-gracegifts.jpg'),
-      getAssetUrl('/hero-personality.jpg'),
-      getAssetUrl('/hero-leadership.jpg')
+      getAssetUrl('/cellphone.webp'),
+      getAssetUrl('/cover-personality.jpg'),
+      getAssetUrl('/cover-gracegifts.jpg')
     ],
     features: [
       'Unlimited assessments for GraceGifts, ePersonality, Leadership, and Skills Tracking for 1 full year',
-      'Full 2-way live sync with Planning Center People, Pushpay ChMS, Breeze, and CCB',
-      'Includes dedicated Church Onboarding Concierge & staff coaching webinar',
-      '30-Day unconditional money-back guarantee for your ministry'
+      'Full 2-way live sync with Planning Center People and Pushpay Church Community Builder (CCB)',
+      'Includes Pastor\'s Class Kit with slide decks, sermon series, and participant handouts',
+      'Includes "Made for a Mission" mobilization guide by Chuck Ballard (AssessME Founder)'
     ],
     dimensions: [
-      { num: 1, title: 'All 4 Core Assessments', desc: 'GraceGifts, ePersonality, Leadership Style, Skills Inventory.' },
-      { num: 2, title: 'Unlimited Candidate Seats', desc: 'Deploy across entire church membership without per-person caps.' },
+      { num: 1, title: 'All 5 Core Assessments', desc: 'ePersonality, GraceGifts, Leadership Style, Skills Tracking, NextSteps.' },
+      { num: 2, title: 'Unlimited Candidate Seats', desc: 'Deploy across your entire congregation without per-person caps.' },
       { num: 3, title: 'Automated ChMS Webhooks', desc: 'Zero manual data entry for church administrative staff.' },
-      { num: 4, title: 'Volunteer Placement Matcher', desc: 'Automated algorithm linking member gifts to open ministries.' }
+      { num: 4, title: 'Pastor\'s Class & Sermon Kit', desc: 'Pre-packaged 4-session weekend teaching and slides.' }
     ],
     specs: {
       licenseType: 'Unlimited Church-Wide Annual License',
       onboarding: 'Dedicated 1-on-1 Ministry Concierge',
       guarantee: '100% Satisfaction or Full Refund',
-      integrations: 'Universal API + Direct ChMS Connect',
-      support: 'Priority Pastoral Telephone & Video Support'
+      integrations: 'Planning Center, Pushpay CCB, Breeze',
+      support: 'Priority Pastoral Helpline & Video Training'
     }
   }
 ]
 
 export const CATEGORIES = [
   { id: 'all', name: 'All Assessments', count: 6 },
-  { id: 'spiritual-gifts', name: 'Spiritual Gifts', count: 1 },
   { id: 'personality', name: 'Temperament', count: 1 },
+  { id: 'spiritual-gifts', name: 'Spiritual Gifts', count: 1 },
   { id: 'leadership', name: 'Leadership & Staff', count: 1 },
   { id: 'skills', name: 'Skills & Trades', count: 1 },
+  { id: 'discipleship', name: 'Discipleship', count: 1 },
   { id: 'bundle', name: 'Church Suites', count: 1 },
+]
+
+export const STEPS = [
+  {
+    step: '01',
+    title: 'Invite People',
+    desc: 'Send customized email invites or post public enrollment links on your church website & bulletin.',
+    image: getAssetUrl('/interface-invite.webp')
+  },
+  {
+    step: '02',
+    title: 'Manage Members',
+    desc: 'Track candidate completion live. Automated reminders keep church members moving forward.',
+    image: getAssetUrl('/cellphone.webp')
+  },
+  {
+    step: '03',
+    title: 'Automated Reports',
+    desc: 'Instant mobilization reports match candidate gifts & temperaments to open church roles.',
+    image: getAssetUrl('/report-sample.png')
+  },
+  {
+    step: '04',
+    title: 'Equip Leaders',
+    desc: 'Department heads receive team dynamic reports to build complementary, friction-free teams.',
+    image: getAssetUrl('/class-kit.webp')
+  },
+  {
+    step: '05',
+    title: 'Launch Sermon Series',
+    desc: 'Deploy the 4-week "Made for a Mission" sermon series with slides and teaching notes.',
+    image: getAssetUrl('/book-mission.avif')
+  },
+  {
+    step: '06',
+    title: 'Mobilize Disciples',
+    desc: 'Watch volunteer retention soar as members serve in the authentic sweet spots God created them for.',
+    image: getAssetUrl('/conference.webp')
+  }
 ]
 
 export const PASTORS = [
   {
     name: 'Pastor David Evans',
-    title: 'Senior Pastor, Grace Fellowship',
+    title: 'Senior Pastor, Grace Point Fellowship',
     location: 'San Diego, CA',
-    quote: 'AssessME eliminated the volunteer revolving door in our church. Our people are now serving with deep joy in their authentic sweet spots.',
-    image: getAssetUrl('/pastor-1.jpg'),
+    quote: 'AssessME eliminated the volunteer revolving door in our church. Our people are now serving with deep biblical joy in their authentic sweet spots.',
+    church: 'Grace Point Fellowship',
     initials: 'DE',
   },
   {
     name: 'Dr. Sarah Jenkins',
-    title: 'Discipleship & Executive Director',
+    title: 'Executive Director of Discipleship',
     location: 'Austin, TX',
-    quote: 'We connected AssessME directly into Planning Center. Every member class takes GraceGifts, and our 1-year volunteer retention surged by 68%.',
-    image: getAssetUrl('/pastor-2.jpg'),
+    quote: 'We connected AssessME directly into Planning Center. Every member class takes GraceGifts and ePersonality, and our 1-year volunteer retention surged by 68%.',
+    church: 'Austin Hope Church',
     initials: 'SJ',
   },
   {
     name: 'Pastor Marcus Rivera',
-    title: 'Lead Pastor, Hope Valley Church',
+    title: 'Lead Pastor, Valley Community Church',
     location: 'Atlanta, GA',
-    quote: 'The synergy between ePersonality and Spiritual Gifts is unmatched. It prevents volunteer burnout before it starts.',
-    image: getAssetUrl('/pastor-3.jpg'),
+    quote: 'The synergy between ePersonality and Spiritual Gifts is unmatched. It prevents volunteer burnout before it ever starts.',
+    church: 'Valley Community Church',
     initials: 'MR',
-  },
-]
-
-export const CHURCH_INSTALLATIONS = [
-  {
-    churchName: 'Grace Point Community',
-    system: 'Whole-Church GraceGifts & Planning Center Sync',
-    image: getAssetUrl('/church-team-1.jpg'),
-    badge: '1,200 Members',
-  },
-  {
-    churchName: 'Saddleback Valley Church',
-    system: 'Staff Leadership & Deacon Placement',
-    image: getAssetUrl('/church-team-2.jpg'),
-    badge: 'Multi-Campus',
-  },
-  {
-    churchName: 'The Rock Fellowship',
-    system: 'Skills Inventory & Volunteer Mobilization',
-    image: getAssetUrl('/sample-report-1.jpg'),
-    badge: 'Zero Volunteer Burnout',
-  },
-  {
-    churchName: 'Cornerstone City Church',
-    system: 'NextSteps Discipleship Pipeline',
-    image: getAssetUrl('/sample-report-2.jpg'),
-    badge: 'Church Plant Hub',
   },
 ]
 
@@ -306,9 +324,8 @@ export const CHURCH_ZONES = [
 ]
 
 export const CHMS_INTEGRATIONS = [
-  { id: 'pco', name: 'Planning Center People', desc: 'Auto-populates spiritual gifts and personality tags on member cards.' },
-  { id: 'pushpay', name: 'Pushpay ChMS', desc: 'Live two-way sync into Pushpay member records and process queues.' },
-  { id: 'ccb', name: 'Church Community Builder', desc: 'Fills custom profile fields and triggers automated volunteer workflows.' },
+  { id: 'pco', name: 'Planning Center Online (PCO)', desc: 'Auto-populates spiritual gifts and personality tags on member profiles.' },
+  { id: 'pushpay', name: 'Pushpay / Church Community Builder (CCB)', desc: 'Live two-way sync into Pushpay member records and process queues.' },
   { id: 'breeze', name: 'Breeze ChMS', desc: 'Seamless volunteer tags and instant ministry roster placement.' },
 ]
 
@@ -324,7 +341,7 @@ export const QUIZ_QUESTIONS = [
       },
       {
         id: 'logistics',
-        label: 'Behind-The-Scenes Tech, Logistics & Helps',
+        label: 'Behind-The-Scenes Tech, Logistics & Crafts',
         desc: 'Audio/video, event staging, facility crafts, and practical operational execution'
       },
       {

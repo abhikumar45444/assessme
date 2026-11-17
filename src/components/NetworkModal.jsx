@@ -37,12 +37,12 @@ export default function NetworkModal({ isOpen, onClose, selectedZone, onSelectZo
       <div className="flex-1" onClick={onClose} />
 
       {/* Slide-up sheet */}
-      <div className="w-full bg-white rounded-t-[36px] max-h-[92dvh] md:max-h-[92%] h-[92dvh] md:h-[92%] flex flex-col overflow-hidden shadow-2xl border-t border-slate-100 z-10 transition-transform duration-300">
+      <div className="w-full bg-white rounded-t-[36px] max-h-[92dvh] md:max-h-[92%] h-[92dvh] md:h-[92%] flex flex-col overflow-hidden shadow-2xl border-t border-[#ECECEC] z-10 transition-transform duration-300">
         {/* Top drag handle indicator */}
         <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto my-3 flex-shrink-0" />
 
         {/* Top header */}
-        <div className="px-5 pb-3 flex items-center justify-between border-b border-slate-100 flex-shrink-0">
+        <div className="px-5 pb-3 flex items-center justify-between border-b border-[#ECECEC] flex-shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -52,113 +52,101 @@ export default function NetworkModal({ isOpen, onClose, selectedZone, onSelectZo
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
-              <h3 className="text-base font-bold text-[#0F172A] leading-tight">Select Ministry Network</h3>
-              <p className="text-[11px] text-[#64748B]">Connecting to regional church mobilization hubs</p>
+              <h3 className="text-sm font-black font-cabin text-[#111518]">Select Ministry Network</h3>
+              <p className="text-[11px] text-[#696767]">Regional support & ChMS database cluster</p>
             </div>
-          </div>
-          <div className="w-9 h-9 rounded-full bg-sky-50 flex items-center justify-center text-[#0284C7] flex-shrink-0">
-            <Church className="w-4 h-4" />
           </div>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 no-scrollbar scrollbar-hide">
-          {/* Auto detect button */}
+        {/* Modal content body */}
+        <div className="flex-1 overflow-y-auto no-scrollbar scrollbar-hide p-5 space-y-4">
+          {/* GPS Auto-detect button */}
           <button
             onClick={handleAutoDetect}
             disabled={isDetecting}
-            className="w-full py-3.5 px-4 rounded-2xl bg-[#0284C7] hover:bg-[#0369A1] active:scale-[0.99] text-white flex items-center justify-between shadow-md shadow-sky-900/20 transition-all cursor-pointer"
+            className="w-full p-3.5 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-between hover:bg-orange-100/70 transition-all cursor-pointer group shadow-2xs"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center">
-                <Navigation className={`w-4 h-4 text-white ${isDetecting ? 'animate-spin' : ''}`} />
+              <div className="w-8 h-8 rounded-xl bg-[#E17335] text-white flex items-center justify-center shadow-xs">
+                <Navigation className={`w-4 h-4 ${isDetecting ? 'animate-spin' : ''}`} />
               </div>
               <div className="text-left">
-                <span className="text-xs font-bold block leading-tight">
-                  {isDetecting ? 'Detecting Ministry Region...' : 'Auto-Detect Church Location'}
+                <span className="block text-xs font-bold text-[#111518]">
+                  {isDetecting ? 'Locating closest ministry district...' : 'Auto-Detect Church Location'}
                 </span>
-                <span className="text-[10px] text-sky-100/90">
-                  GPS pinpoint to nearest regional district hub
+                <span className="block text-[11px] text-[#E17335] font-medium">
+                  Connect to regional mobilization director
                 </span>
               </div>
             </div>
-            <span className="text-xs font-black">→</span>
           </button>
 
-          {/* Search bar */}
+          {/* Search box */}
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search church, district, zip, or region..."
+              placeholder="Search by state, city, or zip code..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200/80 rounded-2xl text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:bg-white transition-all shadow-2xs"
+              className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-[#111518] placeholder-slate-400 outline-none focus:border-[#E17335] transition-colors"
             />
           </div>
 
-          {/* Available Zones Header */}
-          <div className="pt-1">
-            <span className="text-[10px] font-extrabold text-[#64748B] uppercase tracking-wider block mb-2 px-1">
-              ACTIVE MINISTRY NETWORKS ({filteredZones.length})
+          {/* Ministry Zones list */}
+          <div className="space-y-2">
+            <span className="text-[11px] font-bold text-[#696767] uppercase tracking-wider block">
+              AVAILABLE CHURCH DISTRICTS ({filteredZones.length})
             </span>
 
-            <div className="space-y-2.5">
-              {filteredZones.map((zone) => {
-                const isSelected = selectedZone === zone.name
+            {filteredZones.map((zone) => {
+              const isSelected = selectedZone === zone.name
 
-                return (
-                  <div
-                    key={zone.name}
-                    onClick={() => handleSelectZone(zone.name)}
-                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between shadow-xs ${
-                      isSelected
-                        ? 'bg-sky-50/70 border-[#0284C7]'
-                        : 'bg-white border-slate-200/80 hover:border-sky-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 min-w-0 pr-2">
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                        isSelected ? 'bg-[#0284C7] text-white' : 'bg-slate-100 text-slate-500'
-                      }`}>
-                        <Church className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="text-xs font-bold text-[#0F172A] truncate">
-                            {zone.name}
-                          </h4>
-                          <span className="text-[9px] font-bold text-[#16A34A] bg-green-50 px-1.5 py-0.2 rounded flex-shrink-0">
-                            {zone.eta}
-                          </span>
-                        </div>
-                        <p className="text-[10px] text-[#64748B] truncate mt-0.5">
-                          Zip: {zone.pincode} • {zone.county} • {zone.activeChurches} Churches Active
-                        </p>
-                      </div>
+              return (
+                <div
+                  key={zone.name}
+                  onClick={() => handleSelectZone(zone.name)}
+                  className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                    isSelected
+                      ? 'bg-orange-50/70 border-[#E17335] shadow-2xs'
+                      : 'bg-white border-slate-100 hover:border-slate-200 shadow-2xs'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        isSelected ? 'bg-[#E17335] text-white' : 'bg-slate-100 text-slate-600'
+                      }`}
+                    >
+                      <Church className="w-4 h-4" />
                     </div>
 
-                    {isSelected ? (
-                      <div className="w-6 h-6 rounded-full bg-[#0284C7] text-white flex items-center justify-center shadow-xs flex-shrink-0">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-xs font-bold text-[#111518]">{zone.name}</h4>
+                        {isSelected && (
+                          <span className="w-4 h-4 rounded-full bg-[#E17335] text-white flex items-center justify-center text-[10px]">
+                            <Check className="w-2.5 h-2.5 stroke-[3]" />
+                          </span>
+                        )}
                       </div>
-                    ) : (
-                      <div className="text-slate-400 font-bold flex-shrink-0 text-sm">›</div>
-                    )}
+                      <p className="text-[11px] text-[#696767] mt-0.5">
+                        {zone.county} • Zip: {zone.pincode}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">
+                          {zone.eta}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-medium">
+                          {zone.activeChurches} active churches
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                )
-              })}
-            </div>
+                </div>
+              )
+            })}
           </div>
-        </div>
-
-        {/* Footer Guarantee */}
-        <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#64748B] px-5 flex-shrink-0">
-          <span className="flex items-center gap-1.5">
-            <Shield className="w-3.5 h-3.5 text-[#16A34A]" />
-            <span>Official AssessME.org ChMS Data Bridge</span>
-          </span>
-          <span className="font-bold text-[#0284C7]">2,500+ Hubs</span>
         </div>
       </div>
     </div>
